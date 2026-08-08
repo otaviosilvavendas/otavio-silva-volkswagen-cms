@@ -1,0 +1,2 @@
+type Item={title:string;description:string};
+export default function FeatureGrid({title,items}:{title:string;items:Item[]}){return <section className="section"><div className="container"><div className="section-heading"><span className="eyebrow">Destaques</span><h2>{title}</h2></div><div className="features">{items.map((item)=><article className="feature" key={item.title}><h3>{item.title}</h3><p>{item.description}</p></article>)}</div></div></section>}

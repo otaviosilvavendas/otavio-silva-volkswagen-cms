@@ -1,0 +1,2 @@
+type Item={label:string;value:string};
+export default function SpecificationTable({items}:{items:Item[]}){return <section className="section"><div className="container"><div className="section-heading"><span className="eyebrow">Ficha técnica</span><h2>Informações do veículo.</h2></div><div className="spec-table">{items.map(item=><div className="spec-row" key={item.label}><strong>{item.label}</strong><span>{item.value}</span></div>)}</div></div></section>}

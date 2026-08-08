@@ -1,0 +1,1 @@
+export default function Footer(){return <footer className="footer"><div className="container footer-grid"><div><h3>OTÁVIO SILVA</h3><p>Consultor especializado Volkswagen.<br/>14 anos de experiência comercializando automóveis.</p></div><div><h3>Contato</h3><p>(11) 94785-8479<br/>Rua Colômbia, 799 — Jardins, São Paulo<br/>Volkswagen Caraigá</p></div></div></footer>}

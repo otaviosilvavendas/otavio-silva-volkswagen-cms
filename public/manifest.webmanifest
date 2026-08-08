@@ -1,0 +1,10 @@
+{
+  "name":"Otávio Silva | Volkswagen",
+  "short_name":"Otávio Volkswagen",
+  "description":"Atendimento especializado Volkswagen.",
+  "start_url":"/",
+  "display":"standalone",
+  "background_color":"#001e50",
+  "theme_color":"#001e50",
+  "lang":"pt-BR"
+}
