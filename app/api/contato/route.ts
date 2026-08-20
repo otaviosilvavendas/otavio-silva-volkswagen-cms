@@ -9,11 +9,10 @@ export async function POST(request: Request) {
     const mensagem = formData.get('mensagem')?.toString() || ''
 
     const apiKey = process.env.RESEND_API_KEY
-    const destino = process.env.LEADS_FROM_EMAIL
 
-    if (!apiKey || !destino) {
+    if (!apiKey) {
       return Response.json(
-        { error: 'Configuração de e-mail não encontrada.' },
+        { error: 'Chave do Resend não encontrada.' },
         { status: 500 }
       )
     }
@@ -25,10 +24,10 @@ export async function POST(request: Request) {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        from: destino,
-        to: [destino],
+        from: 'onboarding@resend.dev',
+        to: ['otaviosilva.vendas@gmail.com'],
         subject: `Novo atendimento pelo site - ${nome}`,
-        reply_to: email,
+        ...(email ? { reply_to: email } : {}),
         text: `
 NOVO ATENDIMENTO PELO SITE
 
