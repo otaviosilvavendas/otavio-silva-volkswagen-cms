@@ -103,7 +103,9 @@ export default function LeadForm() {
           </label>
 
           <div className="trade-section">
-            <strong>Tem interesse em incluir seu veículo na troca?</strong>
+            <strong>
+              Tem interesse em incluir seu veículo na troca?
+            </strong>
 
             <div className="trade-options">
               <label>
@@ -139,6 +141,7 @@ export default function LeadForm() {
                 <input
                   name="trocaMarca"
                   placeholder="Ex.: Volkswagen"
+                  required
                 />
               </label>
 
@@ -147,6 +150,7 @@ export default function LeadForm() {
                 <input
                   name="trocaModelo"
                   placeholder="Ex.: Taos Highline"
+                  required
                 />
               </label>
 
@@ -155,6 +159,7 @@ export default function LeadForm() {
                 <input
                   name="trocaAno"
                   placeholder="Ex.: 2024/2025"
+                  required
                 />
               </label>
 
@@ -163,6 +168,7 @@ export default function LeadForm() {
                 <input
                   name="trocaKm"
                   placeholder="Ex.: 35.000 km"
+                  required
                 />
               </label>
 
@@ -208,6 +214,22 @@ export default function LeadForm() {
                 />
               </label>
 
+              <label>
+                Fotos do seu veículo
+                <input
+                  type="file"
+                  name="trocaFotos"
+                  accept="image/jpeg,image/png,image/webp"
+                  multiple
+                />
+              </label>
+
+              <small>
+                Você pode enviar várias fotos. Recomendamos fotos da
+                frente, traseira, laterais, interior, painel e
+                quilometragem.
+              </small>
+
               <small>
                 As informações ajudam em uma avaliação inicial do veículo.
                 A avaliação definitiva depende da análise presencial.
@@ -215,7 +237,11 @@ export default function LeadForm() {
             </div>
           )}
 
-          <button className="btn btn-blue" type="submit" disabled={enviando}>
+          <button
+            className="btn btn-blue"
+            type="submit"
+            disabled={enviando}
+          >
             {enviando ? 'Enviando...' : 'Solicitar atendimento'}
           </button>
 
