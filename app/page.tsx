@@ -28,12 +28,14 @@ export default function Home() {
               <h1 id="heroTitle"></h1>
               <p id="heroText"></p>
               <div className="hero-points" id="heroPoints"></div>
+
               <a
                 className="wa-btn"
                 id="heroButton"
                 target="_blank"
-                rel="noreferrer"
+                rel="noopener noreferrer"
               ></a>
+
               <small id="heroSmall"></small>
             </div>
 
@@ -97,8 +99,8 @@ export default function Home() {
               <h2>Envie os dados do seu usado</h2>
 
               <p>
-                Quanto mais informações e fotos você enviar,
-                melhor será nossa análise inicial.
+                Quanto mais informações e fotos você enviar, melhor será nossa
+                análise inicial.
               </p>
 
               <form id="tradeForm">
@@ -232,7 +234,7 @@ export default function Home() {
                   placeholder="E-mail"
                 />
 
-                <select name="modelo">
+                <select name="modelo" defaultValue="">
                   <option value="">
                     Modelo de interesse
                   </option>
@@ -256,8 +258,7 @@ export default function Home() {
               </button>
 
               <small>
-                Ao enviar, você autoriza o contato para proposta e
-                condições.
+                Ao enviar, você autoriza o contato para proposta e condições.
               </small>
 
               <div id="leadMessage"></div>
@@ -279,6 +280,8 @@ export default function Home() {
         <button
           className="modal-close"
           id="modalClose"
+          type="button"
+          aria-label="Fechar"
         >
           ×
         </button>
