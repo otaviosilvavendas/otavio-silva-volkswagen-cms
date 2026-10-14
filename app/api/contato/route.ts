@@ -1,260 +1,111 @@
+const DESTINATARIO = 'otavio.silva@caraiga.com.br'
+const MAX_TOTAL_BYTES = 9 * 1024 * 1024
+const TIPOS_IMAGEM = new Set(['image/jpeg', 'image/png', 'image/webp'])
+
+function clean(value: FormDataEntryValue | null) {
+  return typeof value === 'string' ? value.trim() : ''
+}
+
+function escapeHtml(value: string) {
+  return value.replace(/[&<>"']/g, (char) => ({
+    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;',
+  })[char]!)
+}
+
 export async function POST(request: Request) {
   try {
     const formData = await request.formData()
-
-    // =========================
-    // DADOS DO CLIENTE
-    // =========================
-
-    const nome = formData.get('nome')?.toString() || ''
-    const whatsapp = formData.get('whatsapp')?.toString() || ''
-    const email = formData.get('email')?.toString() || ''
-    const veiculo = formData.get('veiculo')?.toString() || ''
-    const mensagem = formData.get('mensagem')?.toString() || ''
-
-    // =========================
-    // DADOS DO VEÍCULO NA TROCA
-    // =========================
-
-    const incluirTroca =
-      formData.get('incluirTroca')?.toString() || 'Não'
-
-    const trocaMarca =
-      formData.get('trocaMarca')?.toString() || ''
-
-    const trocaModelo =
-      formData.get('trocaModelo')?.toString() || ''
-
-    const trocaAno =
-      formData.get('trocaAno')?.toString() || ''
-
-    const trocaKm =
-      formData.get('trocaKm')?.toString() || ''
-
-    const trocaVersao =
-      formData.get('trocaVersao')?.toString() || ''
-
-    const trocaCor =
-      formData.get('trocaCor')?.toString() || ''
-
-    const trocaQuitado =
-      formData.get('trocaQuitado')?.toString() || ''
-
-    const trocaFinanciamento =
-      formData.get('trocaFinanciamento')?.toString() || ''
-
-    const trocaValor =
-      formData.get('trocaValor')?.toString() || ''
-
-    // =========================
-    // CONFIGURAÇÕES
-    // =========================
-
+    const tipo = clean(formData.get('tipoFormulario')) || 'proposta'
     const apiKey = process.env.RESEND_API_KEY
-    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
-    const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+    const from = process.env.LEADS_FROM_EMAIL || 'onboarding@resend.dev'
 
     if (!apiKey) {
-      return Response.json(
-        { error: 'Chave do Resend não encontrada.' },
-        { status: 500 }
-      )
+      return Response.json({ error: 'O envio de e-mail ainda não está configurado (RESEND_API_KEY).' }, { status: 500 })
     }
 
-    if (!supabaseUrl || !supabaseKey) {
-      return Response.json(
-        { error: 'Configuração do Supabase não encontrada.' },
-        { status: 500 }
-      )
+    const nome = clean(formData.get('nome'))
+    const whatsapp = clean(formData.get('whatsapp')) || clean(formData.get('telefone'))
+    const emailCliente = clean(formData.get('email'))
+    if (!nome || !whatsapp) {
+      return Response.json({ error: 'Preencha nome e WhatsApp.' }, { status: 400 })
     }
 
-    // =========================
-    // UPLOAD DAS FOTOS
-    // =========================
+    const fotos = [...formData.getAll('fotos'), ...formData.getAll('trocaFotos')]
+      .filter((item): item is File => item instanceof File && item.size > 0)
 
-    const fotos = formData.getAll('trocaFotos')
-    const linksFotos: string[] = []
+    let totalBytes = 0
+    const attachments: { filename: string; content: string }[] = []
+    for (const foto of fotos) {
+      if (!TIPOS_IMAGEM.has(foto.type)) {
+        return Response.json({ error: `O arquivo "${foto.name}" não é JPG, PNG ou WEBP.` }, { status: 400 })
+      }
+      totalBytes += foto.size
+      if (totalBytes > MAX_TOTAL_BYTES) {
+        return Response.json({ error: 'O total das fotos ultrapassa 9 MB. Envie menos fotos ou reduza o tamanho das imagens.' }, { status: 413 })
+      }
+      const bytes = Buffer.from(await foto.arrayBuffer())
+      attachments.push({ filename: foto.name.replace(/[^\p{L}\p{N}._ -]/gu, '_'), content: bytes.toString('base64') })
+    }
 
-    if (incluirTroca === 'Sim' && fotos.length > 0) {
-      for (const item of fotos) {
-        if (!(item instanceof File)) {
-          continue
-        }
-
-        if (item.size === 0) {
-          continue
-        }
-
-        // Aceita somente imagens
-        const tiposPermitidos = [
-          'image/jpeg',
-          'image/png',
-          'image/webp',
+    const fields: [string, string][] = tipo === 'avaliacao-usado'
+      ? [
+          ['Tipo de solicitação', 'Avaliação de veículo usado para troca'],
+          ['Nome', nome], ['WhatsApp', whatsapp],
+          ['Marca', clean(formData.get('marca'))],
+          ['Modelo', clean(formData.get('modelo'))],
+          ['Versão', clean(formData.get('versao'))],
+          ['Ano/modelo', clean(formData.get('ano'))],
+          ['Quilometragem', clean(formData.get('km'))],
+          ['Cor', clean(formData.get('cor'))],
+          ['Placa (opcional)', clean(formData.get('placa'))],
+          ['Observações', clean(formData.get('observacoes'))],
+          ['Fotos anexadas', attachments.length ? attachments.map(a => a.filename).join(', ') : 'Nenhuma foto anexada'],
+        ]
+      : [
+          ['Tipo de solicitação', 'Proposta de compra de veículo'],
+          ['Nome', nome], ['WhatsApp', whatsapp], ['E-mail do cliente', emailCliente],
+          ['Modelo de interesse', clean(formData.get('modelo')) || clean(formData.get('veiculo'))],
+          ['Forma de compra', clean(formData.get('compra'))],
+          ['Mensagem / detalhes', clean(formData.get('mensagem'))],
+          ['Tem interesse em incluir veículo na troca?', clean(formData.get('incluirTroca')) || 'Não informado'],
+          ['Marca do veículo na troca', clean(formData.get('trocaMarca'))],
+          ['Modelo do veículo na troca', clean(formData.get('trocaModelo'))],
+          ['Versão do veículo na troca', clean(formData.get('trocaVersao'))],
+          ['Ano/modelo do veículo na troca', clean(formData.get('trocaAno'))],
+          ['Quilometragem do veículo na troca', clean(formData.get('trocaKm'))],
+          ['Cor do veículo na troca', clean(formData.get('trocaCor'))],
+          ['Quitado?', clean(formData.get('trocaQuitado'))],
+          ['Possui financiamento?', clean(formData.get('trocaFinanciamento'))],
+          ['Valor aproximado desejado', clean(formData.get('trocaValor'))],
+          ['Fotos anexadas', attachments.length ? attachments.map(a => a.filename).join(', ') : 'Nenhuma foto anexada'],
         ]
 
-        if (!tiposPermitidos.includes(item.type)) {
-          continue
-        }
+    const text = fields.map(([label, value]) => `${label}: ${value || 'Não informado'}`).join('\n\n')
+    const html = `<div style="font-family:Arial,sans-serif;color:#152235;max-width:700px;margin:auto"><h2 style="background:#071525;color:white;padding:22px">Novo contato — CompreVolks</h2><p>Uma nova solicitação foi enviada pelo site.</p><table style="border-collapse:collapse;width:100%">${fields.map(([label,value]) => `<tr><th align="left" style="padding:10px;border:1px solid #dfe6ee;background:#f4f7fa;width:36%">${escapeHtml(label)}</th><td style="padding:10px;border:1px solid #dfe6ee;white-space:pre-wrap">${escapeHtml(value || 'Não informado')}</td></tr>`).join('')}</table><p style="font-size:12px;color:#66758a">Envio automático do formulário do site CompreVolks com Otávio Silva.</p></div>`
 
-        // Nome único para a foto
-        const extensao =
-          item.name.split('.').pop()?.toLowerCase() || 'jpg'
-
-        const nomeArquivo = `${Date.now()}-${Math.random()
-          .toString(36)
-          .substring(2, 10)}.${extensao}`
-
-        const caminho = `trocas/${nomeArquivo}`
-
-        const arquivo = await item.arrayBuffer()
-
-        const upload = await fetch(
-          `${supabaseUrl}/storage/v1/object/trade-in-images/${caminho}`,
-          {
-            method: 'POST',
-            headers: {
-              Authorization: `Bearer ${supabaseKey}`,
-              apikey: supabaseKey,
-              'Content-Type': item.type,
-            },
-            body: arquivo,
-          }
-        )
-
-        if (!upload.ok) {
-          const erroUpload = await upload.text()
-
-          console.error(
-            'Erro ao enviar foto para o Supabase:',
-            erroUpload
-          )
-
-          continue
-        }
-
-        // Como o bucket será público,
-        // conseguimos montar o link diretamente.
-        const urlFoto =
-          `${supabaseUrl}/storage/v1/object/public/trade-in-images/${caminho}`
-
-        linksFotos.push(urlFoto)
-      }
-    }
-
-    // =========================
-    // MONTAGEM DOS DADOS DA TROCA
-    // =========================
-
-    let dadosTroca = `
-NÃO POSSUI VEÍCULO PARA TROCA
-`
-
-    if (incluirTroca === 'Sim') {
-      dadosTroca = `
-VEÍCULO NA TROCA
-
-Marca: ${trocaMarca}
-Modelo: ${trocaModelo}
-Ano/Modelo: ${trocaAno}
-Quilometragem: ${trocaKm}
-Versão: ${trocaVersao}
-Cor: ${trocaCor}
-Quitado: ${trocaQuitado}
-Possui financiamento: ${trocaFinanciamento}
-Valor aproximado desejado: ${trocaValor}
-
-Fotos do veículo:
-${
-  linksFotos.length > 0
-    ? linksFotos
-        .map((foto, index) => `Foto ${index + 1}: ${foto}`)
-        .join('\n')
-    : 'Nenhuma foto enviada.'
-}
-`
-    }
-
-    // =========================
-    // ENVIO DO E-MAIL
-    // =========================
-
-    const resposta = await fetch(
-      'https://api.resend.com/emails',
-      {
-        method: 'POST',
-        headers: {
-          Authorization: `Bearer ${apiKey}`,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          from: 'onboarding@resend.dev',
-
-          to: ['otaviosilva.vendas@gmail.com'],
-
-          subject: `Novo atendimento pelo site - ${nome}`,
-
-          ...(email ? { reply_to: email } : {}),
-
-          text: `
-NOVO ATENDIMENTO PELO SITE
-
-==============================
-DADOS DO CLIENTE
-==============================
-
-Nome: ${nome}
-WhatsApp: ${whatsapp}
-E-mail: ${email}
-Veículo de interesse: ${veiculo}
-
-Mensagem:
-${mensagem}
-
-==============================
-VEÍCULO NA TROCA
-==============================
-
-Interesse em incluir veículo na troca: ${incluirTroca}
-
-${dadosTroca}
-
-==============================
-ATENDIMENTO
-==============================
-
-Este contato foi enviado através do site.
-          `,
-        }),
-      }
-    )
-
-    if (!resposta.ok) {
-      const erro = await resposta.text()
-
-      console.error('Erro Resend:', erro)
-
-      return Response.json(
-        { error: 'Não foi possível enviar o e-mail.' },
-        { status: 500 }
-      )
-    }
-
-    return Response.json({
-      success: true,
+    const response = await fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: { Authorization: `Bearer ${apiKey}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        from,
+        to: [DESTINATARIO],
+        subject: `[CompreVolks] ${tipo === 'avaliacao-usado' ? 'Avaliação de usado' : 'Nova proposta'} — ${nome}`,
+        ...(emailCliente ? { reply_to: emailCliente } : {}),
+        text,
+        html,
+        ...(attachments.length ? { attachments } : {}),
+      }),
     })
-  } catch (error) {
-    console.error(
-      'Erro no formulário:',
-      error
-    )
 
-    return Response.json(
-      {
-        error: 'Erro ao processar o formulário.',
-      },
-      {
-        status: 500,
-      }
-    )
+    if (!response.ok) {
+      const details = await response.text()
+      console.error('Resend error:', details)
+      return Response.json({ error: 'O serviço de e-mail não aceitou o envio. Confira a configuração do remetente no Resend.' }, { status: 502 })
+    }
+
+    return Response.json({ success: true, message: 'Solicitação enviada por e-mail.' })
+  } catch (error) {
+    console.error('Erro no formulário:', error)
+    return Response.json({ error: 'Não foi possível processar o formulário. Tente novamente.' }, { status: 500 })
   }
 }
