@@ -1,9 +1,9 @@
 const DEFAULT = {
-  site:{brand:"OTÁVIO SILVA",subbrand:"AUTOS",whatsapp:"5511947858479",instagram:"@otavio.volks",email:"otavio.silva@caraiga.com.br",address:"Rua Colômbia, 799 • Jardim América - SP",hours:"Seg a Sex: 08h às 19h • Sáb: 08h às 14h",footerDealership:"Volkswagen Caraigá",footerCity:"São Paulo - SP",footerNote:"Atendimento especializado Volkswagen",copyright:"Todos os direitos reservados."},
+  site:{brand:"COMPREVOLKS",subbrand:"COM OTÁVIO SILVA",whatsapp:"5511947858479",instagram:"@otavio.volks",email:"otavio.silva@caraiga.com.br",address:"Rua Colômbia, 799 • Jardim América - SP",hours:"Atendimento com hora marcada",footerDealership:"CompreVolks",footerCity:"São Paulo - SP",footerNote:"Encontre seu próximo Volkswagen com atendimento personalizado",copyright:"Todos os direitos reservados."},
   nav:[
     ["INÍCIO","#inicio"],["VEÍCULOS","#veiculos"],["OFERTAS","#ofertas"],["BLINDADOS","#blindados"],["VENDA SEU USADO","#usado"],["CONTATO","#contato"]
   ],
-  hero:{kicker:"VOLKSWAGEN 0 KM",title:"É NA CARAIGÁ|JARDINS",text:"As melhores condições, atendimento especializado e todo suporte que você precisa.",points:["ATENDIMENTO PERSONALIZADO","CONDIÇÕES EXCLUSIVAS","VEÍCULOS 0 KM E BLINDADOS"],button:"◉ FALAR COM OTÁVIO SILVA",small:"Respondemos rapidamente",image:"media/hero-tiguan.png"},
+  hero:{kicker:"VOLKSWAGEN 0 KM",title:"SEU PRÓXIMO|VOLKSWAGEN",text:"Encontre seu próximo Volkswagen com atendimento personalizado, transparência e condições especiais.",points:["ATENDIMENTO PERSONALIZADO","CONDIÇÕES EXCLUSIVAS","VEÍCULOS 0 KM E BLINDADOS"],button:"◉ FALAR COM OTÁVIO SILVA",small:"Respondemos rapidamente",image:"media/hero-tiguan.png"},
   shorts:{kicker:"CONHEÇA A LINHA VOLKSWAGEN",title:"Shorts",items:[
     {id:"s1",title:"Tiguan 2026",text:"Tecnologia, conforto e performance.",type:"image",src:"media/hero-tiguan.png",active:true},
     {id:"s2",title:"T-Cross Highline",text:"SUV, tecnologia e segurança.",type:"image",src:"media/Volkswagen T-Cross no showroom Caraiga.png",active:true},
@@ -24,13 +24,13 @@ const esc=s=>String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&
 const wa=()=>`https://wa.me/${DATA.site.whatsapp}`;
 
 function render(){
- document.title=`${DATA.site.brand} ${DATA.site.subbrand} | Caraigá Jardins`;
+ document.title=`${DATA.site.brand} ${DATA.site.subbrand} | Volkswagen`;
  document.getElementById("siteHeader").innerHTML=`<div class="container nav"><a class="logo" href="#inicio"><strong>${esc(DATA.site.brand)}</strong><span>${esc(DATA.site.subbrand)}</span></a><nav>${DATA.nav.map(n=>`<a href="${esc(n[1])}">${esc(n[0])}</a>`).join("")}</nav><a class="nav-wa" href="${wa()}" target="_blank">WhatsApp</a></div>`;
  const h=DATA.hero;
  heroKicker.textContent=h.kicker; heroTitle.innerHTML=h.title.split("|").map(esc).join("<br><b>"); heroTitle.innerHTML += "</b>".repeat(Math.max(0,h.title.split("|").length-1));
  heroText.textContent=h.text; heroPoints.innerHTML=h.points.map(p=>`<span>✓ ${esc(p)}</span>`).join(""); heroButton.textContent=h.button; heroButton.href=wa(); heroSmall.textContent=h.small;
  heroImage.src=h.image||""; heroImage.alt=h.title.replace("|"," ");
- heroInfo.innerHTML=`<div><b>CARAIGÁ JARDINS</b><span>${esc(DATA.site.address)}</span></div><div><b>WHATSAPP</b><span>${esc(DATA.site.whatsapp.replace(/^55/,"+55 "))}</span></div><div><b>INSTAGRAM</b><span>${esc(DATA.site.instagram)}</span></div><div><b>ATENDIMENTO</b><span>${esc(DATA.site.hours)}</span></div>`;
+ heroInfo.innerHTML=`<div><b>COMPREVOLKS</b><span>${esc(DATA.site.address)}</span></div><div><b>WHATSAPP</b><span>${esc(DATA.site.whatsapp.replace(/^55/,"+55 "))}</span></div><div><b>INSTAGRAM</b><span>${esc(DATA.site.instagram)}</span></div><div><b>ATENDIMENTO</b><span>${esc(DATA.site.hours)}</span></div>`;
  shortsKicker.textContent=DATA.shorts.kicker; shortsTitle.textContent=DATA.shorts.title;
  const activeShorts=DATA.shorts.items.filter(x=>x.active); shortsRow.innerHTML=`<div class="shorts-track">${activeShorts.map(x=>`<article class="short-card" data-short="${esc(x.id)}">${x.type==="video"&&x.src?`<video src="${esc(x.src)}" muted playsinline></video>`:(x.src?`<img src="${esc(x.src)}" alt="${esc(x.title)}">`:`<div style="height:100%;display:grid;place-items:center;color:#8fc8ff;font-weight:800;padding:25px;text-align:center">${esc(x.title)}</div>`)}<div class="shade"></div><div class="play">${x.type==="video"?"▶":"＋"}</div><div class="scopy"><h3>${esc(x.title)}</h3><p>${esc(x.text)}</p></div></article>`).join("")}</div><button class="shorts-arrow prev" aria-label="Shorts anteriores">‹</button><button class="shorts-arrow next" aria-label="Próximos Shorts">›</button>`;
  benefitKicker.textContent=DATA.benefits.kicker; benefitsTitle.textContent=DATA.benefits.title; benefitItems.innerHTML=DATA.benefits.items.map(x=>`<div><strong>${esc(x[0])}</strong><b>${esc(x[1])}</b></div>`).join("");
