@@ -1,49 +1,42 @@
-const DEFAULT = {
-  site:{brand:"COMPREVOLKS",subbrand:"COM OTÁVIO SILVA",whatsapp:"5511947858479",instagram:"@otavio.volks",email:"otavio.silva@caraiga.com.br",address:"Rua Colômbia, 799 • Jardim América - SP",hours:"Atendimento com hora marcada",footerDealership:"CompreVolks",footerCity:"São Paulo - SP",footerNote:"Encontre seu próximo Volkswagen com atendimento personalizado",copyright:"Todos os direitos reservados."},
-  nav:[
-    ["INÍCIO","#inicio"],["VEÍCULOS","#veiculos"],["OFERTAS","#ofertas"],["BLINDADOS","#blindados"],["VENDA SEU USADO","#usado"],["CONTATO","#contato"]
-  ],
-  hero:{kicker:"VOLKSWAGEN 0 KM",title:"SEU PRÓXIMO|VOLKSWAGEN",text:"Encontre seu próximo Volkswagen com atendimento personalizado, transparência e condições especiais.",points:["ATENDIMENTO PERSONALIZADO","CONDIÇÕES EXCLUSIVAS","VEÍCULOS 0 KM E BLINDADOS"],button:"◉ FALAR COM OTÁVIO SILVA",small:"Respondemos rapidamente",image:"media/Interior premium de Volkswagen em destaque.png"},
-  shorts:{kicker:"CONHEÇA A LINHA VOLKSWAGEN",title:"Modelos e novidades",items:[
-    {id:"s1",title:"Tiguan 2026",text:"Tecnologia, conforto e performance.",type:"image",src:"media/hero-tiguan.png",active:true},
-    {id:"s2",title:"T-Cross Highline",text:"SUV, tecnologia e segurança.",type:"image",src:"media/Volkswagen T-Cross no showroom Caraiga.png",active:true},
-    {id:"s3",title:"Jetta GLI 2026",text:"Esportividade e potência.",type:"image",src:"media/Jetta GLI 2026: exclusividade e performance.png",active:true},
-    {id:"s4",title:"Por dentro do Volkswagen",text:"Conheça os detalhes do interior.",type:"image",src:"media/Interior premium de Volkswagen em destaque.png",active:true}
-  ]},
-  benefits:{kicker:"AQUI VOCÊ ENCONTRA",title:"Condições para você comprar melhor",items:[
-    ["%","CONDIÇÕES EXCLUSIVAS"],["↔","BÔNUS NO SEU USADO"],["▣","FINANCIAMENTO FACILITADO"],["◇","BLINDAGEM HOMOLOGADA"]
-  ]},
-  armor:{kicker:"SEGURANÇA E TRANQUILIDADE",title:"VEÍCULOS|BLINDADOS",text:"Opções selecionadas para você e sua família.",button:"SAIBA MAIS"},
-  trade:{kicker:"TROQUE SEU CARRO",title:"AVALIE SEU USADO|NA TROCA",intro:"É rápido, gratuito e sem compromisso.",bullets:["Melhor avaliação possível para seu usado","Processo seguro e transparente","Use o valor na entrada do seu 0 km"]},
-  contact:{kicker:"FALE COMIGO",title:"SOLICITE SUA PROPOSTA",text:"Preencha os dados e receba uma proposta personalizada."},
-  features:[["REVISÃO DE SÉRIE","Mais economia e tranquilidade"],["TECNOLOGIA ALEMÃ","Inovação e qualidade"],["REDE AUTORIZADA","Toda segurança Volkswagen"],["PÓS-VENDA ESPECIALIZADO","Suporte completo para você"]]
+(() => {
+const KEY='comprevolks_content_v3';
+const defaults={
+ brand:'COMPREVOLKS',subbrand:'COM OTÁVIO SILVA',whatsapp:'5511947858479',instagram:'@otavio.volks',email:'otavio.silva@caraiga.com.br',
+ headline:'SEU PRÓXIMO|VOLKSWAGEN',intro:'Escolha seu próximo Volkswagen com atendimento personalizado, transparência e condições especiais.',
+ heroImage:'/media/Interior premium de Volkswagen em destaque.png',
+ models:[
+ {name:'Polo',desc:'Compacto, moderno e conectado.',image:'/media/Volkswagen T-Cross no showroom Caraiga.png',price:'Consulte condições'},
+ {name:'Tera',desc:'Design marcante para sua rotina.',image:'/media/hero-tiguan.png',price:'Consulte condições'},
+ {name:'Nivus',desc:'Estilo SUV com tecnologia.',image:'/media/Volkswagen T-Cross no showroom Caraiga.png',price:'Consulte condições'},
+ {name:'T-Cross',desc:'Espaço, conforto e versatilidade.',image:'/media/Volkswagen T-Cross no showroom Caraiga.png',price:'Consulte condições'},
+ {name:'Taos',desc:'Conforto para ir mais longe.',image:'/media/hero-tiguan.png',price:'Consulte condições'},
+ {name:'Jetta GLI',desc:'Esportividade em cada detalhe.',image:'/media/Jetta GLI 2026_ exclusividade e performance.png',price:'Consulte condições'},
+ {name:'Tiguan',desc:'Tecnologia e conforto em um SUV.',image:'/media/hero-tiguan.png',price:'Consulte condições'},
+ {name:'Virtus',desc:'Sedã com espaço e sofisticação.',image:'/media/Interior premium de Volkswagen em destaque.png',price:'Consulte condições'}
+ ],
+ offers:[{title:'Condições especiais Volkswagen',text:'Consulte disponibilidade, versões e condições vigentes para o modelo desejado.'}],
+ contactText:'Conte o que você procura. Vou ajudar você a encontrar a melhor opção.',
+ tradeText:'Avalie seu usado para estudar a possibilidade de usá-lo na troca pelo seu próximo Volkswagen.'
 };
-let DATA = JSON.parse(localStorage.getItem("comprevolks_site_data_v2") || "null") || DEFAULT; DATA.site = {...DEFAULT.site, ...(DATA.site||{})};
-const save=()=>localStorage.setItem("comprevolks_site_data_v2",JSON.stringify(DATA));
-const esc=s=>String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));
-const wa=()=>`https://wa.me/${DATA.site.whatsapp}`;
-
+let data; try{data={...defaults,...JSON.parse(localStorage.getItem(KEY)||'{}')}}catch{data={...defaults}}
+const save=()=>localStorage.setItem(KEY,JSON.stringify(data));
+const $=id=>document.getElementById(id);
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const wa=(msg)=>'https://wa.me/'+String(data.whatsapp||defaults.whatsapp).replace(/\D/g,'')+'?text='+encodeURIComponent(msg);
 function render(){
- document.title=`${DATA.site.brand} ${DATA.site.subbrand} | Volkswagen`;
- document.getElementById("siteHeader").innerHTML=`<div class="container nav"><a class="logo" href="#inicio"><strong>${esc(DATA.site.brand)}</strong><span>${esc(DATA.site.subbrand)}</span></a><nav>${DATA.nav.map(n=>`<a href="${esc(n[1])}">${esc(n[0])}</a>`).join("")}</nav><a class="nav-wa" href="${wa()}" target="_blank">WhatsApp</a></div>`;
- const h=DATA.hero;
- heroKicker.textContent=h.kicker; heroTitle.innerHTML=h.title.split("|").map(esc).join("<br><b>"); heroTitle.innerHTML += "</b>".repeat(Math.max(0,h.title.split("|").length-1));
- heroText.textContent=h.text; heroPoints.innerHTML=h.points.map(p=>`<span>✓ ${esc(p)}</span>`).join(""); heroButton.textContent=h.button; heroButton.href=wa(); heroSmall.textContent=h.small;
- heroImage.src=h.image||""; heroImage.alt=h.title.replace("|"," ");
- heroInfo.innerHTML=`<div><b>COMPREVOLKS</b><span>${esc(DATA.site.address)}</span></div><div><b>WHATSAPP</b><span>${esc(DATA.site.whatsapp.replace(/^55/,"+55 "))}</span></div><div><b>INSTAGRAM</b><span>${esc(DATA.site.instagram)}</span></div><div><b>ATENDIMENTO</b><span>${esc(DATA.site.hours)}</span></div>`;
- shortsKicker.textContent=DATA.shorts.kicker; shortsTitle.textContent=DATA.shorts.title;
- const activeShorts=DATA.shorts.items.filter(x=>x.active); shortsRow.innerHTML=`<div class="shorts-track">${activeShorts.map(x=>`<article class="short-card" data-short="${esc(x.id)}">${x.type==="video"&&x.src?`<video src="${esc(x.src)}" muted playsinline></video>`:(x.src?`<img src="${esc(x.src)}" alt="${esc(x.title)}">`:`<div style="height:100%;display:grid;place-items:center;color:#8fc8ff;font-weight:800;padding:25px;text-align:center">${esc(x.title)}</div>`)}<div class="shade"></div><div class="play">${x.type==="video"?"▶":"＋"}</div><div class="scopy"><h3>${esc(x.title)}</h3><p>${esc(x.text)}</p></div></article>`).join("")}</div><button class="shorts-arrow prev" aria-label="Shorts anteriores">‹</button><button class="shorts-arrow next" aria-label="Próximos Shorts">›</button>`;
- benefitKicker.textContent=DATA.benefits.kicker; benefitsTitle.textContent=DATA.benefits.title; benefitItems.innerHTML=DATA.benefits.items.map(x=>`<div><strong>${esc(x[0])}</strong><b>${esc(x[1])}</b></div>`).join("");
- armorKicker.textContent=DATA.armor.kicker; armorTitle.innerHTML=DATA.armor.title.split("|").map(esc).join("<br>"); armorText.textContent=DATA.armor.text; armorButton.textContent=DATA.armor.button;
- tradeKicker.textContent=DATA.trade.kicker; tradeTitle.innerHTML=DATA.trade.title.split("|").map(esc).join("<br>"); tradeIntro.textContent=DATA.trade.intro; tradeBullets.innerHTML=DATA.trade.bullets.map(x=>`<li>${esc(x)}</li>`).join("");
- contactKicker.textContent=DATA.contact.kicker; contactTitle.textContent=DATA.contact.title; contactText.textContent=DATA.contact.text;
- features.innerHTML=DATA.features.map(x=>`<div><b>${esc(x[0])}</b><span>${esc(x[1])}</span></div>`).join("");
- siteFooter.innerHTML=`<div class="container footer-grid"><div class="footer-logo"><strong>${esc(DATA.site.brand)}</strong><span>${esc(DATA.site.subbrand)}</span><p>${esc(DATA.site.footerNote||"Atendimento especializado Volkswagen")}</p></div><div class="footer-col"><b>${esc(DATA.site.footerDealership||"Volkswagen Caraigá")}</b><p>${esc(DATA.site.address)}<br>${esc(DATA.site.footerCity||"São Paulo - SP")}</p><p><b>Atendimento</b><br>${esc(DATA.site.hours)}</p></div><div class="footer-col"><p><b>WhatsApp</b><br><a href="${wa()}" target="_blank" rel="noopener">${esc(DATA.site.whatsapp)}</a></p><p><b>E-mail</b><br><a href="mailto:${esc(DATA.site.email)}">${esc(DATA.site.email)}</a></p><p><b>Instagram</b><br>${esc(DATA.site.instagram)}</p></div><div class="vw" aria-label="Volkswagen Caraigá">VW<br><small>CARAIGÁ</small></div></div><div class="copyright">© 2026 ${esc(DATA.site.brand)} ${esc(DATA.site.subbrand)}. ${esc(DATA.site.copyright||"Todos os direitos reservados.")}</div>`;
- document.querySelectorAll(".short-card").forEach(c=>c.onclick=()=>openShort(c.dataset.short)); const track=document.querySelector(".shorts-track"), prev=document.querySelector(".shorts-arrow.prev"), next=document.querySelector(".shorts-arrow.next"); if(track&&prev&&next){const update=()=>{prev.classList.toggle("show",track.scrollLeft>8);next.classList.toggle("show",track.scrollLeft+track.clientWidth<track.scrollWidth-8)}; prev.onclick=()=>track.scrollBy({left:-track.clientWidth,behavior:"smooth"}); next.onclick=()=>track.scrollBy({left:track.clientWidth,behavior:"smooth"}); track.addEventListener("scroll",update,{passive:true}); update(); window.addEventListener("resize",update)}
+ document.title=data.brand+' '+data.subbrand+' | Volkswagen';
+ $('brand').textContent=data.brand;$('subbrand').textContent=data.subbrand;
+ $('heroImage').src=data.heroImage||defaults.heroImage;
+ $('headline').innerHTML=esc(data.headline).split('|').join('<br><span>');
+ $('headline').innerHTML+='</span>';
+ $('intro').textContent=data.intro;
+ $('heroCta').href=wa('Olá Otávio! Quero conhecer as opções Volkswagen.');$('heroCta').textContent='FALAR COM OTÁVIO';
+ $('modelGrid').innerHTML=(data.models||[]).map(m=>'<article class="model-card"><img src="'+esc(m.image||data.heroImage)+'" alt="'+esc(m.name)+'" loading="lazy"><div class="model-body"><small>VOLKSWAGEN</small><h3>'+esc(m.name)+'</h3><p>'+esc(m.desc)+'</p><strong>'+esc(m.price||'Consulte condições')+'</strong><a class="small-cta" target="_blank" rel="noopener" href="'+wa('Olá Otávio! Tenho interesse no Volkswagen '+m.name+'. Pode me enviar versões e condições?')+'">Consultar modelo ↗</a></div></article>').join('');
+ $('offerGrid').innerHTML=(data.offers||[]).map(o=>'<article class="offer-card"><span>OPORTUNIDADE VOLKSWAGEN</span><h3>'+esc(o.title)+'</h3><p>'+esc(o.text)+'</p><a target="_blank" rel="noopener" href="'+wa('Olá Otávio! Quero saber mais sobre: '+o.title)+'">Consultar oferta ↗</a></article>').join('');
+ $('contactText').textContent=data.contactText;$('tradeText').textContent=data.tradeText;
+ $('contactForm').onsubmit=e=>{e.preventDefault();const d=Object.fromEntries(new FormData(e.currentTarget));window.open(wa('Olá Otávio! Quero uma proposta.\nNome: '+d.nome+'\nWhatsApp: '+d.whatsapp+'\nE-mail: '+(d.email||'não informado')+'\nModelo: '+(d.modelo||'a definir')+'\nMensagem: '+(d.mensagem||'')),'_blank','noopener');$('contactStatus').textContent='WhatsApp aberto com sua solicitação. Confira a mensagem antes de enviar.';};
+ $('tradeForm').onsubmit=e=>{e.preventDefault();const d=Object.fromEntries(new FormData(e.currentTarget));const files=[...e.currentTarget.querySelector('[name=fotos]').files].map(f=>f.name).join(', ');window.open(wa('Olá Otávio! Quero avaliar meu usado para troca.\nNome: '+d.nome+'\nWhatsApp: '+d.whatsapp+'\nE-mail: '+(d.email||'não informado')+'\nMarca/modelo: '+d.marca+' '+d.modelo+' '+(d.versao||'')+'\nAno: '+d.ano+'\nKM: '+d.km+'\nCor: '+(d.cor||'não informada')+'\nPlaca: '+(d.placa||'não informada')+'\nObservações: '+(d.observacoes||'')+'\nFotos selecionadas: '+(files||'não anexadas')+'\nEnvie as fotos diretamente nesta conversa do WhatsApp.'),'_blank','noopener');$('tradeStatus').textContent='WhatsApp aberto. As fotos não são anexadas automaticamente; envie-as na conversa.';};
+ $('footerBrand').textContent=data.brand+' '+data.subbrand;$('footerEmail').textContent=data.email;$('footerInstagram').textContent=data.instagram;$('footerWhats').href=wa('Olá Otávio! Vim pelo site CompreVolks.');
 }
-function openShort(id){const x=DATA.shorts.items.find(i=>i.id===id);if(!x)return;modalContent.innerHTML=x.type==="video"?`<video src="${esc(x.src)}" controls autoplay></video>`:`<img src="${esc(x.src||"")}" alt="${esc(x.title)}">`;modalCaption.textContent=x.title+" — "+x.text;mediaModal.classList.add("open")}
-modalClose.onclick=()=>mediaModal.classList.remove("open");mediaModal.onclick=e=>{if(e.target===mediaModal)mediaModal.classList.remove("open")};
-function saveLead(type,form){const d=Object.fromEntries(new FormData(form));const leads=JSON.parse(localStorage.getItem("otavio_leads")||"[]");leads.unshift({tipo:type,data:new Date().toLocaleString("pt-BR"),...d});localStorage.setItem("otavio_leads",JSON.stringify(leads));return d}
-tradeForm.onsubmit=e=>{e.preventDefault();const d=saveLead("Avaliação de usado",e.target);window.open(`${wa()}?text=${encodeURIComponent(`Olá Otávio! Quero avaliar meu usado.\nNome: ${d.nome}\nWhatsApp: ${d.whatsapp}\nVeículo: ${d.marca} ${d.modelo} ${d.versao||""}\nAno: ${d.ano}\nKM: ${d.km}\nPlaca: ${d.placa||""}\nObservações: ${d.observacoes||""}`)}`,"_blank");tradeMessage.textContent="Dados registrados neste navegador e WhatsApp aberto."};
-leadForm.onsubmit=e=>{e.preventDefault();const d=saveLead("Proposta",e.target);window.open(`${wa()}?text=${encodeURIComponent(`Olá Otávio! Meu nome é ${d.nome}. Tenho interesse em ${d.modelo||"um Volkswagen"}. WhatsApp: ${d.whatsapp}. ${d.mensagem||""}`)}`,"_blank");leadMessage.textContent="Solicitação registrada e WhatsApp aberto."};
 render();
+})();
