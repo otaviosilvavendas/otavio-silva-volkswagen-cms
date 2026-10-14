@@ -1,5 +1,5 @@
 const DESTINATARIO = 'otavio.silva@caraiga.com.br'
-const MAX_TOTAL_BYTES = 9 * 1024 * 1024
+const MAX_TOTAL_BYTES = 6 * 1024 * 1024
 const TIPOS_IMAGEM = new Set(['image/jpeg', 'image/png', 'image/webp'])
 
 function clean(value: FormDataEntryValue | null) {
@@ -41,7 +41,7 @@ export async function POST(request: Request) {
       }
       totalBytes += foto.size
       if (totalBytes > MAX_TOTAL_BYTES) {
-        return Response.json({ error: 'O total das fotos ultrapassa 9 MB. Envie menos fotos ou reduza o tamanho das imagens.' }, { status: 413 })
+        return Response.json({ error: 'O total das fotos ultrapassa 6 MB. Envie menos fotos ou reduza o tamanho das imagens.' }, { status: 413 })
       }
       const bytes = Buffer.from(await foto.arrayBuffer())
       attachments.push({ filename: foto.name.replace(/[^\p{L}\p{N}._ -]/gu, '_'), content: bytes.toString('base64') })
