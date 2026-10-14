@@ -3,7 +3,7 @@ const KEY='comprevolks_content_v3';
 const defaults={
  brand:'COMPREVOLKS',subbrand:'COM OTÁVIO SILVA',whatsapp:'5511947858479',instagram:'@otavio.volks',email:'otavio.silva@caraiga.com.br',
  headline:'SEU PRÓXIMO|VOLKSWAGEN',intro:'Escolha seu próximo Volkswagen com atendimento personalizado, transparência e condições especiais.',
- heroImage:'/media/Interior premium de Volkswagen em destaque.png',
+ heroImage:'/media/Volkswagen T-Cross no showroom Caraiga.png',
  models:[
  {name:'Polo',desc:'Compacto, moderno e conectado.',image:'/media/Volkswagen T-Cross no showroom Caraiga.png',price:'Consulte condições'},
  {name:'Tera',desc:'Design marcante para sua rotina.',image:'/media/hero-tiguan.png',price:'Consulte condições'},
@@ -12,7 +12,7 @@ const defaults={
  {name:'Taos',desc:'Conforto para ir mais longe.',image:'/media/hero-tiguan.png',price:'Consulte condições'},
  {name:'Jetta GLI',desc:'Esportividade em cada detalhe.',image:'/media/Jetta GLI 2026_ exclusividade e performance.png',price:'Consulte condições'},
  {name:'Tiguan',desc:'Tecnologia e conforto em um SUV.',image:'/media/hero-tiguan.png',price:'Consulte condições'},
- {name:'Virtus',desc:'Sedã com espaço e sofisticação.',image:'/media/Interior premium de Volkswagen em destaque.png',price:'Consulte condições'}
+ {name:'Virtus',desc:'Sedã com espaço e sofisticação.',image:'/media/Volkswagen T-Cross no showroom Caraiga.png',price:'Consulte condições'}
  ],
  offers:[{title:'Condições especiais Volkswagen',text:'Consulte disponibilidade, versões e condições vigentes para o modelo desejado.'}],
  contactText:'Conte o que você procura. Vou ajudar você a encontrar a melhor opção.',
