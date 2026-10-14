@@ -3,8 +3,8 @@ const DEFAULT = {
   nav:[
     ["INÍCIO","#inicio"],["VEÍCULOS","#veiculos"],["OFERTAS","#ofertas"],["BLINDADOS","#blindados"],["VENDA SEU USADO","#usado"],["CONTATO","#contato"]
   ],
-  hero:{kicker:"VOLKSWAGEN 0 KM",title:"SEU PRÓXIMO|VOLKSWAGEN",text:"Encontre seu próximo Volkswagen com atendimento personalizado, transparência e condições especiais.",points:["ATENDIMENTO PERSONALIZADO","CONDIÇÕES EXCLUSIVAS","VEÍCULOS 0 KM E BLINDADOS"],button:"◉ FALAR COM OTÁVIO SILVA",small:"Respondemos rapidamente",image:"media/hero-tiguan.png"},
-  shorts:{kicker:"CONHEÇA A LINHA VOLKSWAGEN",title:"Shorts",items:[
+  hero:{kicker:"VOLKSWAGEN 0 KM",title:"SEU PRÓXIMO|VOLKSWAGEN",text:"Encontre seu próximo Volkswagen com atendimento personalizado, transparência e condições especiais.",points:["ATENDIMENTO PERSONALIZADO","CONDIÇÕES EXCLUSIVAS","VEÍCULOS 0 KM E BLINDADOS"],button:"◉ FALAR COM OTÁVIO SILVA",small:"Respondemos rapidamente",image:"media/Interior premium de Volkswagen em destaque.png"},
+  shorts:{kicker:"CONHEÇA A LINHA VOLKSWAGEN",title:"Modelos e novidades",items:[
     {id:"s1",title:"Tiguan 2026",text:"Tecnologia, conforto e performance.",type:"image",src:"media/hero-tiguan.png",active:true},
     {id:"s2",title:"T-Cross Highline",text:"SUV, tecnologia e segurança.",type:"image",src:"media/Volkswagen T-Cross no showroom Caraiga.png",active:true},
     {id:"s3",title:"Jetta GLI 2026",text:"Esportividade e potência.",type:"image",src:"media/Jetta GLI 2026: exclusividade e performance.png",active:true},
@@ -18,8 +18,8 @@ const DEFAULT = {
   contact:{kicker:"FALE COMIGO",title:"SOLICITE SUA PROPOSTA",text:"Preencha os dados e receba uma proposta personalizada."},
   features:[["REVISÃO DE SÉRIE","Mais economia e tranquilidade"],["TECNOLOGIA ALEMÃ","Inovação e qualidade"],["REDE AUTORIZADA","Toda segurança Volkswagen"],["PÓS-VENDA ESPECIALIZADO","Suporte completo para você"]]
 };
-let DATA = JSON.parse(localStorage.getItem("otavio_site_data") || "null") || DEFAULT; DATA.site = {...DEFAULT.site, ...(DATA.site||{})};
-const save=()=>localStorage.setItem("otavio_site_data",JSON.stringify(DATA));
+let DATA = JSON.parse(localStorage.getItem("comprevolks_site_data_v2") || "null") || DEFAULT; DATA.site = {...DEFAULT.site, ...(DATA.site||{})};
+const save=()=>localStorage.setItem("comprevolks_site_data_v2",JSON.stringify(DATA));
 const esc=s=>String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));
 const wa=()=>`https://wa.me/${DATA.site.whatsapp}`;
 
