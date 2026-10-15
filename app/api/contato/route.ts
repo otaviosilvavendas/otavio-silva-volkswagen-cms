@@ -99,8 +99,16 @@ export async function POST(request: Request) {
 
     if (!response.ok) {
       const details = await response.text()
-      console.error('Resend error:', details)
-      return Response.json({ error: 'O serviço de e-mail não aceitou o envio. Confira a configuração do remetente no Resend.' }, { status: 502 })
+      console.error('Resend error:', response.status, details)
+      let reason = 'O Resend recusou o envio.'
+      try {
+        const parsed = JSON.parse(details)
+        if (typeof parsed.message === 'string') reason = parsed.message
+        else if (typeof parsed.name === 'string') reason = parsed.name
+      } catch {}
+      return Response.json({
+        error: `Falha no serviço de e-mail (${response.status}): ${reason}`,
+      }, { status: 502 })
     }
 
     return Response.json({ success: true, message: 'Solicitação enviada por e-mail.' })
