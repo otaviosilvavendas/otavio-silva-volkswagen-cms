@@ -27,7 +27,7 @@ let data; try{data={...defaults,...JSON.parse(localStorage.getItem(KEY)||'{}')}}
 const save=()=>localStorage.setItem(KEY,JSON.stringify(data));
 const $=id=>document.getElementById(id);
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const wa=(msg)=>'https://wa.me/'+String(data.whatsapp||defaults.whatsapp).replace(/\D/g,'')+'?text='+encodeURIComponent(msg);
+const wa=(msg)=>'https://wa.me/5511947858479?text='+encodeURIComponent(msg);
 function render(){
  document.title=data.brand+' '+data.subbrand+' | Volkswagen';
  $('brand').textContent=data.brand;$('subbrand').textContent=data.subbrand;
