@@ -1,4 +1,4 @@
-const DESTINATARIO = 'otaviosilva.vendas@gmail.com'
+const DESTINATARIO = process.env.LEADS_TO_EMAIL?.trim() || 'otavio.silva@caraiga.com.br'
 const MAX_TOTAL_BYTES = 6 * 1024 * 1024
 const TIPOS_IMAGEM = new Set(['image/jpeg', 'image/png', 'image/webp'])
 
