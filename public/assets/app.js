@@ -36,7 +36,7 @@ const wa=(msg)=>'https://wa.me/5511947858479?text='+encodeURIComponent(msg);
 function render(){
  document.title=data.brand+' '+data.subbrand+' | Volkswagen';
  $('brand').textContent=data.brand;$('subbrand').textContent=data.subbrand;
- $('heroImage').src=data.heroImage||defaults.heroImage;
+ if($('heroImage')) $('heroImage').src=data.heroImage||defaults.heroImage;
  $('headline').innerHTML=esc(data.headline).split('|').join('<br><span>');
  $('headline').innerHTML+='</span>';
  $('intro').textContent=data.intro;
