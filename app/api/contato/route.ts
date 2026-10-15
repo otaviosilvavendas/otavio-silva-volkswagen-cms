@@ -17,7 +17,10 @@ export async function POST(request: Request) {
     const formData = await request.formData()
     const tipo = clean(formData.get('tipoFormulario')) || 'proposta'
     const apiKey = process.env.RESEND_API_KEY
-    const configuredFrom = process.env.LEADS_FROM_EMAIL?.trim()\n    const from = configuredFrom && configuredFrom.toLowerCase().includes('@comprevolks.com.br')\n      ? configuredFrom\n      : 'CompreVolks <contato@comprevolks.com.br>'
+    const configuredFrom = process.env.LEADS_FROM_EMAIL?.trim()
+    const from = configuredFrom && configuredFrom.toLowerCase().includes('@comprevolks.com.br')
+      ? configuredFrom
+      : 'CompreVolks <contato@comprevolks.com.br>'
 
     if (!apiKey) {
       return Response.json({ error: 'O envio de e-mail ainda não está configurado (RESEND_API_KEY).' }, { status: 500 })
