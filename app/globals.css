@@ -82,3 +82,8 @@
   .twin-mobile-help{display:block!important}
   .twin-direct-link{display:flex!important;min-height:54px;font-size:13px}
 }
+
+/* O host do Twin recusa carregamento em iframe: usar acesso direto em todos os dispositivos */
+.twin-frame-wrap{display:none!important}
+.twin-mobile-help{display:block!important}
+.twin-direct-link{display:flex!important;min-height:54px;font-size:13px;width:100%}
