@@ -76,14 +76,12 @@
 
 .twin-mobile-help{font-size:12px;line-height:1.5;color:#b9cfe2;margin:0}.twin-direct-link{display:inline-flex;align-items:center;justify-content:center;align-self:stretch;text-align:center;text-decoration:none;background:#e7f3ff;color:#082541;border:1px solid #83bde9;border-radius:8px;padding:13px 16px;font-size:12px;font-weight:900}.twin-direct-link:hover{background:#fff}@media(max-width:650px){.twin-mobile-help{font-size:12px}.twin-direct-link{width:100%;min-height:46px}}
 
-/* Em telas pequenas, abrir o Twin em página própria evita o quadro WebGL bloqueado no iframe */
+/* Twin visível em dispositivos móveis; o acesso direto permanece como alternativa */
 @media(max-width:650px){
-  .twin-frame-wrap{display:none!important}
-  .twin-mobile-help{display:block!important}
-  .twin-direct-link{display:flex!important;min-height:54px;font-size:13px}
+  .twin-frame-wrap{height:65svh;min-height:420px;max-height:680px}
+  .twin-direct-link{width:100%;min-height:46px}
 }
 
-/* O host do Twin recusa carregamento em iframe: usar acesso direto em todos os dispositivos */
-.twin-frame-wrap{display:none!important}
-.twin-mobile-help{display:block!important}
-.twin-direct-link{display:flex!important;min-height:54px;font-size:13px;width:100%}
+/* O link direto fica disponível como alternativa, sem esconder o Twin incorporado */
+.twin-mobile-help{display:block}
+.twin-direct-link{display:flex;min-height:54px;width:100%}
