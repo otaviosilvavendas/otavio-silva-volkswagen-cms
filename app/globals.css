@@ -73,3 +73,5 @@
 .twin-frame-wrap iframe{width:100%;height:100%;border:0;display:block}
 .twin-contact{display:inline-flex;align-items:center;justify-content:center;text-decoration:none;background:#10bd70;color:#fff;border-radius:8px;padding:14px 18px;font-size:12px;font-weight:900;margin-top:2px}
 @media(max-width:650px){.hero-offer.twin-panel{padding:18px;grid-row:1}.twin-heading h2{font-size:27px}.twin-frame-wrap{height:340px}.twin-picker{max-width:none}}
+
+.twin-mobile-help{font-size:12px;line-height:1.5;color:#b9cfe2;margin:0}.twin-direct-link{display:inline-flex;align-items:center;justify-content:center;align-self:stretch;text-align:center;text-decoration:none;background:#e7f3ff;color:#082541;border:1px solid #83bde9;border-radius:8px;padding:13px 16px;font-size:12px;font-weight:900}.twin-direct-link:hover{background:#fff}@media(max-width:650px){.twin-mobile-help{font-size:12px}.twin-direct-link{width:100%;min-height:46px}}
