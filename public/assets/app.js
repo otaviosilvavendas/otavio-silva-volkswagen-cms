@@ -50,17 +50,16 @@ function render(){
  $('contactText').textContent=data.contactText;$('tradeText').textContent=data.tradeText;
  async function submitLead(form,kind,statusId,buttonText){
   const formEl=$(form), status=$(statusId), button=formEl.querySelector('button[type="submit"]');
-  const fields=Object.fromEntries(new FormData(formEl));
-  if(kind==='trade'){
-   const files=[...(formEl.querySelector('[name="fotos"]')?.files||[])].map(f=>f.name);
-   fields.fotos=files.join(', ');
-  }
+  const data=new FormData(formEl);
+  data.set('tipoFormulario',kind==='trade'?'avaliacao-usado':'proposta');
   if(button){button.disabled=true;button.dataset.originalText=button.textContent;button.textContent='ENVIANDO...';}
   status.textContent='Enviando sua solicitação por e-mail...';
   try{
-   const response=await fetch('/api/leads',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({kind,fields})});
+   // Reutiliza exatamente o endpoint do formulário funcional da raiz do site.
+   // FormData mantém os campos e envia as fotos reais como anexos.
+   const response=await fetch('/api/contato',{method:'POST',body:data});
    const result=await response.json().catch(()=>({}));
-   if(!response.ok) throw new Error(result.error||'Não foi possível enviar agora.');
+   if(!response.ok||!result.success) throw new Error(result.error||'Não foi possível enviar agora.');
    status.textContent='Solicitação enviada com sucesso! Seus dados foram encaminhados para o atendimento.';
    formEl.reset();
   }catch(error){
