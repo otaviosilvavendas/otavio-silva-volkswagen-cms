@@ -48,8 +48,29 @@ function render(){
  if(heroOffer){heroOffer.classList.add('twin-featured');heroOffer.innerHTML='<div class="twin-heading"><span class="featured-eyebrow">EXPLORE SEU PRÓXIMO VOLKSWAGEN</span><h2>Conheça a T-Cross por todos os ângulos</h2><p>Gire e explore o veículo na experiência interativa.</p></div><label class="twin-picker-label" for="twinModelPicker">ESCOLHA O MODELO</label><select id="twinModelPicker" class="twin-picker" aria-label="Escolher modelo Volkswagen"><option value="tcross">T-Cross · Twin interativo (teste)</option><option value="tera" disabled>Tera · em breve</option><option value="nivus" disabled>Nivus · em breve</option><option value="polo" disabled>Polo · em breve</option></select><button type="button" class="twin-popup-open" id="twinOpenPopup">EXPLORAR T-CROSS EM 3D ↗</button><p class="twin-mobile-help">Abra a experiência interativa em uma janela dentro desta página.</p><a class="twin-contact" target="_blank" rel="noopener" href="'+wa('Olá Otávio! Quero conhecer melhor a Volkswagen T-Cross e receber uma proposta.')+'">QUERO UMA PROPOSTA DA T-CROSS ↗</a>';}
  $('shortsGrid').innerHTML=(data.shorts||[]).map(v=>'<article class="short-card"><a class="short-video" href="'+esc(v.url)+'" target="_blank" rel="noopener" aria-label="Assistir '+esc(v.title)+' no YouTube"><iframe src="https://www.youtube-nocookie.com/embed/'+esc(v.videoId)+'" title="'+esc(v.title)+'" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></a><div class="short-body"><span>YOUTUBE SHORTS</span><h3>'+esc(v.title)+'</h3><a href="'+esc(v.url)+'" target="_blank" rel="noopener">Assistir no YouTube ↗</a></div></article>').join('');
  $('contactText').textContent=data.contactText;$('tradeText').textContent=data.tradeText;
- $('contactForm').onsubmit=e=>{e.preventDefault();const d=Object.fromEntries(new FormData(e.currentTarget));window.open(wa('Olá Otávio! Quero uma proposta.\nNome: '+d.nome+'\nWhatsApp: '+d.whatsapp+'\nE-mail: '+(d.email||'não informado')+'\nModelo: '+(d.modelo||'a definir')+'\nMensagem: '+(d.mensagem||'')),'_blank','noopener');$('contactStatus').textContent='WhatsApp aberto com sua solicitação. Confira a mensagem antes de enviar.';};
- $('tradeForm').onsubmit=e=>{e.preventDefault();const d=Object.fromEntries(new FormData(e.currentTarget));const files=[...e.currentTarget.querySelector('[name=fotos]').files].map(f=>f.name).join(', ');window.open(wa('Olá Otávio! Quero avaliar meu usado para troca.\nNome: '+d.nome+'\nWhatsApp: '+d.whatsapp+'\nE-mail: '+(d.email||'não informado')+'\nMarca/modelo: '+d.marca+' '+d.modelo+' '+(d.versao||'')+'\nAno: '+d.ano+'\nKM: '+d.km+'\nCor: '+(d.cor||'não informada')+'\nPlaca: '+(d.placa||'não informada')+'\nObservações: '+(d.observacoes||'')+'\nFotos selecionadas: '+(files||'não anexadas')+'\nEnvie as fotos diretamente nesta conversa do WhatsApp.'),'_blank','noopener');$('tradeStatus').textContent='WhatsApp aberto. As fotos não são anexadas automaticamente; envie-as na conversa.';};
+ async function submitLead(form,kind,statusId,buttonText){
+  const formEl=$(form), status=$(statusId), button=formEl.querySelector('button[type="submit"]');
+  const fields=Object.fromEntries(new FormData(formEl));
+  if(kind==='trade'){
+   const files=[...(formEl.querySelector('[name="fotos"]')?.files||[])].map(f=>f.name);
+   fields.fotos=files.join(', ');
+  }
+  if(button){button.disabled=true;button.dataset.originalText=button.textContent;button.textContent='ENVIANDO...';}
+  status.textContent='Enviando sua solicitação por e-mail...';
+  try{
+   const response=await fetch('/api/leads',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({kind,fields})});
+   const result=await response.json().catch(()=>({}));
+   if(!response.ok) throw new Error(result.error||'Não foi possível enviar agora.');
+   status.textContent='Solicitação enviada com sucesso! Seus dados foram encaminhados para o atendimento.';
+   formEl.reset();
+  }catch(error){
+   status.textContent=(error&&error.message?error.message:'Falha no envio.')+' Você também pode falar pelo WhatsApp.';
+  }finally{
+   if(button){button.disabled=false;button.textContent=button.dataset.originalText||buttonText;}
+  }
+ }
+ $('contactForm').onsubmit=e=>{e.preventDefault();submitLead('contactForm','contact','contactStatus','ENVIAR SOLICITAÇÃO POR E-MAIL');};
+ $('tradeForm').onsubmit=e=>{e.preventDefault();submitLead('tradeForm','trade','tradeStatus','SOLICITAR AVALIAÇÃO POR E-MAIL');};
  $('footerBrand').textContent=data.brand+' '+data.subbrand;$('footerEmail').textContent=data.email;$('footerInstagram').textContent=data.instagram;$('footerWhats').href=wa('Olá Otávio! Vim pelo site CompreVolks.');
 }
 
