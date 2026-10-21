@@ -11,3 +11,16 @@
 .offer-card>span{display:inline-block;margin-top:4px}
 .offer-card>a:not(.offer-poster-link){display:block;margin-bottom:20px}
 @media(max-width:650px){.offer-poster-link{margin-bottom:14px}}
+
+/* Cards de modelos inspirados na referência enviada: foto ampla, degradê e seta circular */
+.model-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px}
+.model-image-card{position:relative;display:block;isolation:isolate;overflow:hidden;aspect-ratio:1.35;border-radius:34px;background:#17212b;color:#fff;text-decoration:none;box-shadow:0 8px 24px rgba(6,20,38,.10);transition:transform .22s ease,box-shadow .22s ease}
+.model-image-card>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;transition:transform .45s ease}
+.model-image-shade{position:absolute;z-index:1;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.02) 28%,rgba(0,0,0,.18) 48%,rgba(0,0,0,.82) 100%)}
+.model-image-title{position:absolute;z-index:2;left:clamp(20px,3vw,42px);right:76px;bottom:clamp(24px,3vw,42px);font-size:clamp(22px,2.2vw,31px);font-weight:500;line-height:1.22;letter-spacing:-.7px;text-shadow:0 2px 12px rgba(0,0,0,.22)}
+.model-image-arrow{position:absolute;z-index:2;right:clamp(18px,3vw,40px);bottom:clamp(20px,3vw,38px);width:54px;height:54px;display:grid;place-items:center;border-radius:50%;background:rgba(70,70,74,.92);color:#fff;font-size:31px;font-weight:300;line-height:1;transition:background .2s ease,transform .2s ease}
+.model-image-card:hover{transform:translateY(-3px);box-shadow:0 16px 34px rgba(6,20,38,.18)}
+.model-image-card:hover>img{transform:scale(1.045)}
+.model-image-card:hover .model-image-arrow{background:#087fd0;transform:translateX(2px)}
+@media(max-width:850px){.model-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.model-image-card{border-radius:24px;aspect-ratio:1.15}.model-image-title{left:20px;bottom:22px;font-size:23px;right:58px}.model-image-arrow{right:16px;bottom:16px;width:42px;height:42px;font-size:26px}}
+@media(max-width:520px){.model-grid{grid-template-columns:1fr;gap:16px}.model-image-card{aspect-ratio:1.5;border-radius:22px}.model-image-title{font-size:25px;left:22px;bottom:23px}.model-image-arrow{width:44px;height:44px;right:18px;bottom:17px}}
