@@ -85,3 +85,22 @@
 /* O link direto fica disponível como alternativa, sem esconder o Twin incorporado */
 .twin-mobile-help{display:block}
 .twin-direct-link{display:flex;min-height:54px;width:100%}
+
+
+/* Fotos dos modelos: enquadramento integral, sem cortes e com apresentação consistente */
+.model-card{isolation:isolate}
+.model-card img{
+  display:block;
+  width:100%;
+  height:220px;
+  padding:10px;
+  object-fit:contain;
+  object-position:center center;
+  background:linear-gradient(180deg,#f8fafc 0%,#e8eef4 100%);
+  transition:transform .25s ease;
+}
+.model-card:hover img{transform:scale(1.025)}
+@media(max-width:650px){
+  .model-card img{height:160px;padding:7px;object-fit:contain}
+}
+@media(prefers-reduced-motion:reduce){.model-card img{transition:none}.model-card:hover img{transform:none}}
