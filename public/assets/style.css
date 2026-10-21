@@ -24,3 +24,11 @@
 .model-image-card:hover .model-image-arrow{background:#087fd0;transform:translateX(2px)}
 @media(max-width:850px){.model-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.model-image-card{border-radius:24px;aspect-ratio:1.15}.model-image-title{left:20px;bottom:22px;font-size:23px;right:58px}.model-image-arrow{right:16px;bottom:16px;width:42px;height:42px;font-size:26px}}
 @media(max-width:520px){.model-grid{grid-template-columns:1fr;gap:16px}.model-image-card{aspect-ratio:1.5;border-radius:22px}.model-image-title{font-size:25px;left:22px;bottom:23px}.model-image-arrow{width:44px;height:44px;right:18px;bottom:17px}}
+
+/* Acabamento fotográfico premium para aproximar a linha Volkswagen da referência enviada */
+.model-image-card{background:#16181c}
+.model-image-card>img{filter:brightness(.91) contrast(1.06) saturate(.91)}
+.model-image-shade{background:linear-gradient(180deg,rgba(8,12,18,.02) 20%,rgba(8,12,18,.10) 42%,rgba(5,8,13,.78) 100%)}
+.model-image-title{font-weight:500;text-wrap:balance}
+.model-image-arrow{background:rgba(65,65,69,.94);backdrop-filter:blur(3px)}
+@media(prefers-reduced-motion:reduce){.model-image-card,.model-image-card>img,.model-image-arrow{transition:none}}
