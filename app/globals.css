@@ -104,3 +104,19 @@
   .model-card img{height:160px;padding:7px;object-fit:contain}
 }
 @media(prefers-reduced-motion:reduce){.model-card img{transition:none}.model-card:hover img{transform:none}}
+
+
+/* Seção "Facilitando sua próxima compra" */
+.facilitating{background:#f3f7fb;color:#071b31;padding:48px 0 18px}
+.facilitating-head{margin:0 0 22px}
+.facilitating-head h2{font-size:clamp(30px,3.2vw,38px);letter-spacing:-1px;line-height:1.12;margin:0 0 8px;color:#071b31}
+.facilitating-head p{font-size:14px;line-height:1.6;color:#627388;margin:0}
+.facilitating-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:15px}
+.facilitating-card{display:flex;flex-direction:column;min-height:188px;padding:24px;background:#fff;border:1px solid #d9e3ee;border-radius:17px;text-decoration:none;color:#071b31;transition:border-color .2s ease,transform .2s ease,box-shadow .2s ease}
+.facilitating-card:hover{border-color:#8dcaff;transform:translateY(-2px);box-shadow:0 10px 24px #0b25420d}
+.facilitating-icon{font-size:25px;line-height:1;color:#69b9ff;margin-bottom:22px;font-weight:500}
+.facilitating-card h3{font-size:16px;margin:0 0 16px;font-weight:800}
+.facilitating-card p{font-size:13px;line-height:1.55;color:#53667c;margin:0}
+@media(max-width:900px){.facilitating-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:650px){.facilitating{padding:42px 0 12px}.facilitating-head h2{font-size:30px}.facilitating-grid{grid-template-columns:1fr;gap:12px}.facilitating-card{min-height:0;padding:20px}.facilitating-icon{margin-bottom:15px}.facilitating-card h3{margin-bottom:9px}}
+@media(prefers-reduced-motion:reduce){.facilitating-card{transition:none}.facilitating-card:hover{transform:none}}
