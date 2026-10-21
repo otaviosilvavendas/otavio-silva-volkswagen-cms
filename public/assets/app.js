@@ -23,7 +23,8 @@ const defaults={
   {title:'Volkswagen Tera 2027',videoId:'aIHHubqLi7s',url:'https://youtube.com/shorts/aIHHubqLi7s?si=byJq36h4BRLmD-Qp'},
   {title:'Volkswagen Tera Comfort',videoId:'HlwurZOSq_o',url:'https://youtube.com/shorts/HlwurZOSq_o?feature=share'},
   {title:'Volkswagen T-Cross',videoId:'VRIPg4qAUW8',url:'https://youtube.com/shorts/VRIPg4qAUW8?si=-4ywuA9YdWGxvSLN'},
-  {title:'Volkswagen Tera - Chave presencial',videoId:'VLxCyLwQ6Eg',url:'https://youtube.com/shorts/VLxCyLwQ6Eg?si=bLKtINB0R2I5twrM'}
+  {title:'Volkswagen Tera - Chave presencial',videoId:'VLxCyLwQ6Eg',url:'https://youtube.com/shorts/VLxCyLwQ6Eg?si=bLKtINB0R2I5twrM'},
+  {title:'Novo Volkswagen — Short',videoId:'cMlP-gsz3lw',url:'https://youtube.com/shorts/cMlP-gsz3lw'}
  ],
  contactText:'Conte o que você procura. Vou ajudar você a encontrar a melhor opção.',
  tradeText:'Avalie seu usado para estudar a possibilidade de usá-lo na troca pelo seu próximo Volkswagen.'
