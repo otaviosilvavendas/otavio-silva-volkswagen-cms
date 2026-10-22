@@ -113,3 +113,21 @@
 @media(max-width:520px){
   .hero-photo{background-image:var(--hero-car-image)!important;background-size:cover!important;background-position:62% center!important}
 }
+
+
+/* Hotfix: make the hero car image independent of runtime CSS variables */
+.hero{position:relative!important;isolation:isolate!important;background:#07111f!important}
+.hero:before{z-index:0!important}
+.hero .hero-photo{
+  position:absolute!important;inset:0!important;z-index:1!important;
+  width:100%!important;height:100%!important;min-height:100%!important;
+  display:block!important;opacity:1!important;border:0!important;border-radius:0!important;
+  background-image:url("https://media.vw.mediaservice.avp.tech/media/fast/v3_02TT2hcZRTFv_d733tTVBJjQhJrm0zaySRpMsnMy2SSUWaRNNoUraQQY0Ho9Js3X2bGvPnTlzcTTYvGlQVp0ZVW0NqNJlARVKooNoIK4j9wo90UFLpqKy6kKtaCE1dd3Xsu99xzFude-E1YdV_w1MyFP7r-tncs_IIQz9SEMD8TVlD3c1VDCDHPXaWyKuixp2u60NXTWI2pRm0sUNWVMSfuTMa2u5hTKMdct-G0ilCTIkwhQuvN8vk2EC0tdd-rKV-VR_M6Vy-0DSaXplI55eq4Sut0PDeZmHKmdCqVVq5yU67j5CbUeG4i79zZHX5ojWfKleXlDO-5FcrQc0VIddzkt5aQshtG6I1EvilQkH72bKfLdYSyK8YqWIsY5yif5PBMrhwiqGX4ArcYLjOyP2M7GX0OvIi8hPkpyTbsUaxxkmexcpivYF9nlAPoUFCDYjTvZudl5CPsut5rFmsOYw_IcTwAewB7FcR9yIShNuwOwlvEN5CZBFr8B3mEcxjTBzGuozdRupd7KPYa3QsYLxC1yzyYayb2GewLxK5DgY0RY8zdJKkR3IT6wdsgd2B3Yc9B0foExgvY97C_AvZg3WF3o_pvYp1g3Aauxu7SvgmfU0_m0SOEdEM_sTQLMPfYJ5g9EvGOpDjyIeQTQMbWANM_ErqGqlb2G8gNN0xzA2kiRVj9zo937Kvk-GrmC-y61-M36Ed-z32fk9kEHEP_Scw3iS6xcDPGP8gX0O-RXIPtoutmbyNmKajjY4fMT6CHdANh-l8EEqYXZgPYC5jnmXnO0iB3IN8BDmPdJE15DpWBsuh5wx9LQwNsO99zNOY5zGvIcOMpZHnSKbp3SL8AZyEy5gLWM8x-QK8DZcwjyJPYymsr7Fu01_B-FDcHZk-NHPwsYMH5hYSdwLnTjDeTOTrutIoNVNY1pUgs_hkdv_-RSc7U_Xy0dVSPihmEmknHi3qUqEYZNKpeFR5taLKBH5dR11V1r7KTC_OO7PZ6ayTjcedqKo0HywoVSsrmce3SdFyNa89XzdKK81h5tB8Ilrwqjnl-Wp1WT-7oo_XdcXVGSda1oHKq0A1tP__qtNuNk__B0wQFBHYAwAA.webp?width=864")!important;
+  background-color:#07111f!important;background-repeat:no-repeat!important;
+  background-size:cover!important;background-position:center 54%!important;
+}
+.hero .hero-photo:after{z-index:1!important}
+.hero .hero-grid{position:relative!important;z-index:2!important}
+.hero .hero-copy{position:relative!important;z-index:3!important}
+.hero .hero-benefits{z-index:4!important}
+@media(max-width:850px){.hero .hero-photo{background-size:cover!important;background-position:62% center!important}}
