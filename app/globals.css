@@ -120,3 +120,24 @@
 @media(max-width:900px){.facilitating-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:650px){.facilitating{padding:42px 0 12px}.facilitating-head h2{font-size:30px}.facilitating-grid{grid-template-columns:1fr;gap:12px}.facilitating-card{min-height:0;padding:20px}.facilitating-icon{margin-bottom:15px}.facilitating-card h3{margin-bottom:9px}}
 @media(prefers-reduced-motion:reduce){.facilitating-card{transition:none}.facilitating-card:hover{transform:none}}
+
+
+/* Hero superior: usar a foto real do Taos configurada pelo app.js, em vez do fundo azul. */
+.hero-photo.hero-offer.twin-panel{
+  position:relative;
+  background-color:#06172d;
+  background-image:linear-gradient(90deg,rgba(6,23,45,.12),rgba(6,23,45,.03)),var(--hero-car-image);
+  background-size:cover;
+  background-position:center;
+  background-repeat:no-repeat;
+  border-color:#315c7e;
+}
+.hero-photo.hero-offer.twin-panel #heroFeatured{
+  display:none;
+}
+@media(max-width:650px){
+  .hero-photo.hero-offer.twin-panel{
+    background-position:center;
+    min-height:300px;
+  }
+}
