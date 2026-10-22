@@ -141,3 +141,5 @@
     min-height:300px;
   }
 }
+
+.model-card img{height:150px;object-fit:contain;padding:10px;background:#edf5fb}.model-body .small-cta{border:0;cursor:pointer;font-family:inherit}.model-card{transition:transform .18s ease,box-shadow .18s ease}.model-card:hover{transform:translateY(-3px);box-shadow:0 16px 36px #0d27401f}
