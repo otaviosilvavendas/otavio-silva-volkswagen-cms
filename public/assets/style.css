@@ -97,3 +97,19 @@
 .hero-benefits{z-index:4!important}
 @media(max-width:850px){.hero-photo{background-size:auto 64%!important;background-position:70% bottom 110px!important}.hero-grid{width:90%!important}}
 @media(max-width:520px){.hero-photo{background-size:auto 47%!important;background-position:68% bottom 155px!important}}
+
+
+/* FINAL HERO IMAGE FIX: consume the image URL assigned by app.js */
+.hero-photo{
+  background-image:var(--hero-car-image)!important;
+  background-color:#101c2a!important;
+  background-repeat:no-repeat!important;
+  background-size:cover!important;
+  background-position:center 54%!important;
+}
+@media(max-width:850px){
+  .hero-photo{background-image:var(--hero-car-image)!important;background-size:cover!important;background-position:center center!important}
+}
+@media(max-width:520px){
+  .hero-photo{background-image:var(--hero-car-image)!important;background-size:cover!important;background-position:62% center!important}
+}
