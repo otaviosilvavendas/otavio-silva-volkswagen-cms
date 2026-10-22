@@ -51,3 +51,38 @@
 @media(min-width:1400px){.hero-photo{background-size: min(82vw,1250px) auto;background-position:right 45% center}}
 @media(max-width:850px){.hero{min-height:680px;padding:100px 0 30px;align-items:flex-start}.hero-grid{display:flex;min-height:570px;width:90%;align-items:flex-start}.hero-copy{padding:40px 0 30px;max-width:560px}.hero h1{font-size:clamp(40px,8vw,60px);max-width:560px}.hero-photo{inset:0 -6% 0 5%;min-height:680px;background-size:auto 62%;background-position:right bottom 12px;opacity:.86}.hero:before{background:linear-gradient(180deg,rgba(3,12,24,.94) 0%,rgba(3,12,24,.76) 43%,rgba(3,12,24,.12) 100%)}.hero-photo:after{background:linear-gradient(180deg,#06111f 0%,rgba(6,17,31,.1) 42%,transparent 75%)}.hero-copy small{margin-top:12px}}
 @media(max-width:520px){.hero{min-height:650px;padding-top:88px}.hero-grid{min-height:550px}.hero-copy{padding-top:30px}.hero h1{font-size:39px;letter-spacing:-1.6px;line-height:1.03;margin:16px 0}.hero p{font-size:15px;max-width:340px}.hero-photo{background-size:auto 47%;background-position:70% bottom 14px;inset:0 -8% 0 -8%}.hero .primary{min-height:46px;padding:0 21px}.hero-copy small{font-size:10px}}
+
+
+/* Redesign CompreVolks: hero fotográfico premium inspirado na referência aprovada */
+.hero{position:relative;min-height:calc(100vh - 80px);padding:0 0 138px;background:#07111f;overflow:hidden;display:flex;align-items:center;isolation:isolate}
+.hero:before{content:"";position:absolute;z-index:0;inset:0;background:linear-gradient(90deg,rgba(5,12,20,.91) 0%,rgba(5,12,20,.72) 27%,rgba(5,12,20,.20) 52%,rgba(5,12,20,.02) 100%),linear-gradient(0deg,rgba(5,12,20,.45),transparent 35%);pointer-events:none}
+.hero-grid{position:static;width:min(1460px,90%);min-height:600px;display:block;margin:0 auto}
+.hero-copy{z-index:3;max-width:540px;padding:70px 0 35px}
+.hero .kicker{color:#9dcfff;font-size:11px;letter-spacing:3px}
+.hero h1{font-size:clamp(46px,5.1vw,76px);line-height:1.02;letter-spacing:-2.4px;font-weight:400;margin:24px 0 22px;max-width:540px}
+.hero h1 span{color:#fff;font-weight:750}
+.hero p{max-width:400px;font-size:clamp(16px,1.5vw,20px);color:#f0f2f5;line-height:1.45}
+.hero-points{display:none}
+.hero-photo{position:absolute;z-index:-1;inset:0 0 0 0;min-height:100%;background-repeat:no-repeat;background-size:cover;background-position:center 54%;opacity:1}
+.hero-photo:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(4,10,18,.50) 0%,rgba(4,10,18,.15) 40%,transparent 76%);pointer-events:none}
+.hero-featured{display:none!important}
+.hero-actions{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-top:30px}
+.hero .primary{min-height:54px;padding:0 26px;border-radius:999px;background:#0866f5;font-size:14px;font-weight:700;box-shadow:0 10px 28px #0058e94d}
+.hero-secondary{display:inline-flex;align-items:center;justify-content:center;min-height:54px;padding:0 24px;border:1px solid rgba(255,255,255,.82);border-radius:999px;color:#fff;text-decoration:none;font-size:14px;font-weight:600;background:rgba(10,15,22,.25);backdrop-filter:blur(8px)}
+.hero-copy small{display:none}
+.hero-benefits{position:absolute;z-index:5;left:5%;right:5%;bottom:26px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));padding:20px 16px;background:rgba(8,16,28,.82);border:1px solid rgba(255,255,255,.14);border-radius:20px;backdrop-filter:blur(16px);box-shadow:0 16px 48px #0004}
+.hero-benefits>div{display:flex;align-items:center;gap:16px;padding:5px 24px;border-right:1px solid rgba(255,255,255,.12)}
+.hero-benefits>div:last-child{border-right:0}
+.benefit-icon{color:#218bff;font-size:35px;line-height:1;min-width:38px;text-align:center}
+.hero-benefits section{display:flex;flex-direction:column;gap:5px}
+.hero-benefits strong{font-size:15px;color:#fff}
+.hero-benefits small{font-size:12px;color:#cbd3df}
+.header{position:relative;z-index:20;background:#030f20;border-bottom:1px solid rgba(255,255,255,.10)}
+.header .nav{min-height:80px}
+.header .logo strong{font-size:23px;letter-spacing:.2px}
+.header .logo span{font-size:10px;letter-spacing:4px}
+.nav nav a{font-size:12px}
+.nav-wa{background:#08b875!important;border-radius:10px!important;padding:16px 24px!important}
+@media(min-width:1400px){.hero-photo{background-size:cover;background-position:center 54%}}
+@media(max-width:850px){.hero{min-height:780px;padding:0 0 230px;align-items:flex-start}.hero-grid{width:90%;min-height:600px}.hero-copy{padding:65px 0 30px;max-width:580px}.hero h1{font-size:clamp(42px,8vw,64px);max-width:560px}.hero-photo{inset:0;min-height:100%;background-size:auto 64%;background-position:70% bottom 110px}.hero:before{background:linear-gradient(180deg,rgba(4,12,22,.94) 0%,rgba(4,12,22,.78) 42%,rgba(4,12,22,.10) 80%,rgba(4,12,22,.32) 100%)}.hero-photo:after{background:linear-gradient(180deg,rgba(4,10,18,.12) 0%,transparent 45%,rgba(4,10,18,.08) 100%)}.hero-benefits{left:5%;right:5%;bottom:18px;grid-template-columns:repeat(2,minmax(0,1fr));padding:12px}.hero-benefits>div{padding:12px;gap:10px;border-right:0}.hero-benefits>div:nth-child(odd){border-right:1px solid rgba(255,255,255,.12)}.hero-benefits strong{font-size:13px}.hero-benefits small{font-size:11px}.benefit-icon{font-size:28px;min-width:28px}}
+@media(max-width:520px){.hero{min-height:790px;padding-bottom:260px}.hero-copy{padding-top:48px}.hero h1{font-size:42px;line-height:1.03;letter-spacing:-1.3px}.hero p{font-size:16px;max-width:330px}.hero-actions{gap:10px;margin-top:22px}.hero .primary,.hero-secondary{min-height:47px;padding:0 17px;font-size:12px}.hero-photo{background-size:auto 47%;background-position:68% bottom 155px}.hero-benefits{bottom:12px;left:4%;right:4%;padding:7px;border-radius:15px}.hero-benefits>div{padding:10px 6px;gap:7px}.hero-benefits strong{font-size:11px}.hero-benefits small{font-size:9px}.benefit-icon{font-size:23px;min-width:22px}.header .nav{min-height:68px}.header .logo strong{font-size:18px}.header .logo span{font-size:8px;letter-spacing:2.5px}.nav-wa{padding:12px 14px!important;font-size:12px}}
