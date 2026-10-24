@@ -58,8 +58,27 @@ function render(){
   if(heroPanel&&taos&&taos.image){heroPanel.style.setProperty('--hero-car-image','url("'+taos.image.replace(/"/g,'%22')+'")');}
   heroOffer.innerHTML='';
  }
- $('shortsGrid').innerHTML=(data.shorts||[]).map(v=>'<article class="short-card"><a class="short-video" href="'+esc(v.url)+'" target="_blank" rel="noopener" aria-label="Assistir '+esc(v.title)+' no YouTube"><iframe src="https://www.youtube-nocookie.com/embed/'+esc(v.videoId)+'" title="'+esc(v.title)+'" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></a><div class="short-body"><span>YOUTUBE SHORTS</span><h3>'+esc(v.title)+'</h3><a href="'+esc(v.url)+'" target="_blank" rel="noopener">Assistir no YouTube ↗</a></div></article>').join('');
+ // Responsive layout and mobile Shorts navigation
+  if(!$('comprevolksResponsiveStyles')){
+   const style=document.createElement('style');style.id='comprevolksResponsiveStyles';
+   style.textContent=`#modelGrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px}#modelGrid .model-card{min-width:0;overflow:hidden}#modelGrid .model-card>img{display:block;width:100%;aspect-ratio:4/3;object-fit:contain;background:#f4f7fa}#modelGrid .model-card>img[style*="visibility: hidden"]{display:none}.shorts-carousel-controls{display:none;gap:10px;justify-content:flex-end;margin:0 0 12px}.shorts-carousel-controls button{width:42px;height:42px;border:1px solid #cbd5e1;border-radius:50%;background:#fff;color:#102b45;font-size:24px;cursor:pointer}@media(max-width:760px){#modelGrid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}#shortsGrid{display:flex!important;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;padding-bottom:10px;-webkit-overflow-scrolling:touch}#shortsGrid .short-card{flex:0 0 88%;min-width:0;scroll-snap-align:start}.shorts-carousel-controls{display:flex}}@media(max-width:420px){#modelGrid{grid-template-columns:1fr}#shortsGrid .short-card{flex-basis:92%}}@media(min-width:761px){#shortsGrid{display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px}#shortsGrid .short-card{min-width:0}#shortsGrid iframe{width:100%;aspect-ratio:9/16}}`;
+   document.head.appendChild(style);
+  }
+  const shortsGrid=$('shortsGrid');
+  if(shortsGrid&&!shortsGrid.parentElement.querySelector('.shorts-carousel-controls')){
+   const controls=document.createElement('div');controls.className='shorts-carousel-controls';controls.setAttribute('aria-label','Navegação dos vídeos');
+   controls.innerHTML='<button type="button" aria-label="Vídeo anterior">‹</button><button type="button" aria-label="Próximo vídeo">›</button>';
+   shortsGrid.parentElement.insertBefore(controls,shortsGrid);
+   const arrows=controls.querySelectorAll('button');
+   arrows[0].addEventListener('click',()=>shortsGrid.scrollBy({left:-shortsGrid.clientWidth*.9,behavior:'smooth'}));
+   arrows[1].addEventListener('click',()=>shortsGrid.scrollBy({left:shortsGrid.clientWidth*.9,behavior:'smooth'}));
+  }
+  $('shortsGrid').innerHTML=(data.shorts||[]).map(v=>'<article class="short-card"><a class="short-video" href="'+esc(v.url)+'" target="_blank" rel="noopener" aria-label="Assistir '+esc(v.title)+' no YouTube"><iframe src="https://www.youtube-nocookie.com/embed/'+esc(v.videoId)+'" title="'+esc(v.title)+'" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></a><div class="short-body"><span>YOUTUBE SHORTS</span><h3>'+esc(v.title)+'</h3><a href="'+esc(v.url)+'" target="_blank" rel="noopener">Assistir no YouTube ↗</a></div></article>').join('');
  $('contactText').textContent=data.contactText;$('tradeText').textContent=data.tradeText;
+  const contactSubmit=$('contactForm')?.querySelector('button[type="submit"]');
+  const tradeSubmit=$('tradeForm')?.querySelector('button[type="submit"]');
+  if(contactSubmit) contactSubmit.textContent='ENVIAR PROPOSTA';
+  if(tradeSubmit) tradeSubmit.textContent='ENVIAR PROPOSTA';
  async function submitLead(form,kind,statusId,buttonText){
   const formEl=$(form), status=$(statusId), button=formEl.querySelector('button[type="submit"]');
   const data=new FormData(formEl);
