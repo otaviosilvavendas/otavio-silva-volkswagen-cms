@@ -146,7 +146,7 @@
 
 /* Hero principal premium — fotografia local para garantir carregamento em todos os dispositivos */
 .hero{position:relative;isolation:isolate;padding:0;background:#071525;overflow:hidden}
-.hero-photo.hero-offer.twin-panel{position:absolute;inset:0;z-index:-1;width:100%;height:100%;min-height:100%;padding:0;margin:0;border:0;border-radius:0;box-shadow:none;background-color:#071525!important;background-image:linear-gradient(90deg,rgba(3,10,18,.78) 0%,rgba(3,10,18,.64) 32%,rgba(3,10,18,.2) 66%,rgba(3,10,18,.04) 100%),linear-gradient(0deg,rgba(3,10,18,.28),rgba(3,10,18,.02)),url('/media/hero-tiguan.png')!important;background-size:cover!important;background-position:center 56%!important;background-repeat:no-repeat!important}
+.hero-photo.hero-offer.twin-panel{position:absolute;inset:0;z-index:0;width:100%;height:100%;min-height:100%;padding:0;margin:0;border:0;border-radius:0;box-shadow:none;background-color:#071525!important;background-image:linear-gradient(90deg,rgba(3,10,18,.78) 0%,rgba(3,10,18,.64) 32%,rgba(3,10,18,.2) 66%,rgba(3,10,18,.04) 100%),linear-gradient(0deg,rgba(3,10,18,.28),rgba(3,10,18,.02)),url('/media/hero-tiguan.png')!important;background-size:cover!important;background-position:center 56%!important;background-repeat:no-repeat!important}
 .hero-photo.hero-offer.twin-panel #heroFeatured{display:none!important}
 .hero-grid{position:relative;z-index:1;display:block;min-height:690px;padding-top:160px;padding-bottom:70px}
 .hero-copy{width:min(540px,54%);padding:0}
@@ -159,3 +159,7 @@
 .hero .primary{background:#0866f5;border-radius:99px;min-height:50px;padding:14px 22px;font-size:13px}
 .hero-secondary{display:inline-flex;align-items:center;justify-content:center;min-height:50px;padding:13px 21px;border:1px solid rgba(255,255,255,.85);border-radius:99px;background:rgba(4,12,21,.2);color:#fff;text-decoration:none;font-size:13px;font-weight:800}
 @media(max-width:650px){.hero-photo.hero-offer.twin-panel{background-position:62% center!important}.hero-grid{min-height:680px;padding-top:150px;padding-bottom:35px}.hero-copy{width:100%;max-width:410px}.hero h1{font-size:clamp(40px,10.5vw,54px);letter-spacing:-1.5px}.hero-copy>p{font-size:15px;max-width:320px}.hero-actions{align-items:flex-start;flex-direction:column;gap:10px;margin-top:23px}.hero .primary,.hero-secondary{min-height:48px;padding:13px 20px}.hero-secondary{min-width:205px}}
+
+/* A foto do hero precisa ficar acima do fundo da seção e atrás do texto */
+.hero-photo.hero-offer.twin-panel{z-index:0!important}
+.hero-grid{position:relative;z-index:1!important}
