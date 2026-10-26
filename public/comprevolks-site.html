@@ -82,6 +82,7 @@ async function submitByEmail(form, tipo, buttonText){
   status.textContent="Solicitação enviada com sucesso! Seus dados foram encaminhados por e-mail para o atendimento.";
   form.reset();
   if(document.getElementById("tradeFields"))document.getElementById("tradeFields").style.display="none";
+  if(typeof updatePurchasePath==="function")updatePurchasePath();
  }catch(err){
   let status=form.querySelector(".form-status");
   if(!status){status=document.createElement("div");status.className="note form-status";status.setAttribute("role","alert");form.appendChild(status)}
