@@ -2,7 +2,7 @@
 const KEY='comprevolks_content_v3';
 const defaults={
  brand:'COMPREVOLKS',subbrand:'COM OTÁVIO SILVA',whatsapp:'5511947858479',instagram:'@otavio.volks',email:'otavio.silva@caraiga.com.br',
- headline:'SEU PRÓXIMO|VOLKSWAGEN. SUA PRÓXIMA HISTÓRIA.',intro:'Design, tecnologia e segurança para você ir mais longe.',
+ headline:'Seu próximo|Volkswagen. Sua próxima história.',intro:'Design, tecnologia e segurança para você ir mais longe.',
  heroImage:'/media/Volkswagen T-Cross no showroom Caraiga.png',
  models:[
  {name:'Tera',desc:'Design marcante para sua rotina.',image:'https://media.vw.mediaservice.avp.tech/media/fast/v3_x2TW2gcZRiG_3n-mX9EbGNs0g0xJ8JmzWmzm8nsritspUm9UawB21gVu8zO_tlsuqdOdjcpqVIPGKWI7VWobfWiFVQqgiCKohURr1QUKYoieCF4qnpRC2JVnPjdfAe-9_vei_e98KuwWoHgwdkLVyJ_quv2fYcQaw0h5BlhNVtBoW4IIea5vlz1Sjqx3NClyEB7Ne61G4mmDryEk3Qy8a0q7iwuxn2_7XQIO4QIKYR9LEzvbzVi-_ZWUGl4gVedKupCq9Q56jnZGV_PpDIFJ5MquknPcW91k9pPFzLT2il4fnpG-76fuilEfyCkV6mIjmK6Wl_0nJnFoF5rNnxhFxen3UIqKcwtGqIj2gzKpZIO8tUgv9SYxrGQH2IcYuRVRjfAh6fIzsK3cJmJFpMJpn4h8RPm25jv4O7AmsKawT2Flcc6izqH3Ycdxz4CSXr6kdvodZCfY95F3wZiAuMKKNQ4ahP7IUQKFWHoJYYuEl1GHIWPkQeY2CR1L9ZXqE7UJOogap2ufRgniQwQiROZQx7HvAPrG6yrqCdR7xL9jJHwtcFWtOAwY_sZO4o1i7uM-zDuK6TWsD4ldT5kgepCjaDuhP0MfYJawziBvIS8Ru8lzAEG30LZqF5Ulexxhv5APYJ6megBoprRLxm7HekjN5G_k-jCdDBvw9yD9QPpn0lfQ-1F3Y_9Bj2TmBLzBFac_mMMzmH9y_hOJr5HbtD3N8ZvcCPqNYY_IjqKuIGRdYznidUxfsT4C_M0iWdxh1E-SpN5AvUY9mm6OjHepHsX3WvQQ_fX7HSI7CJyBhlB9tG7DXkK-SK9VzGHMe_h5i_oX8DKYTn0P83AScZuYfx15DPIy5hDJLKYL-BmUQ9gRxm8COtMPE7mUXgPeRDLw_qHkXoouOd0rV0ORVbVtWZu4b783NyCk5-tV4qx1XKxuZSbzjrJ2JIul5aauWw6GfMqjSUv1wxaOuZ71dANud0L886e_O68k08mnZhXC_3TLNdrK7m9W6BYtV7UlUC3yyvhMHf3_HSsVKkXvErgrR7SR1b04Zau-TrnxKq66RW9ptfWwf-rzg4Znv4PMhxebrcDAAA.webp?width=864',price:'Consulte condições'},
