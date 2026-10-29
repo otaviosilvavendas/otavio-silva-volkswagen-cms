@@ -59,7 +59,7 @@ export async function POST(request: NextRequest) {
     }
     if (action === 'admin-list') {
       if (!adminOk(request)) return NextResponse.json({ error: 'Senha de atendimento inválida.' }, { status: 401 });
-      const rows = await db('chat_conversations?select=id,visitor_name,status,last_message,created_at,updated_at&order=updated_at.desc&limit=100');
+      const rows = await db('chat_conversations?select=id,visitor_name,visitor_phone,channel,status,last_message,created_at,updated_at&order=updated_at.desc&limit=100');
       return NextResponse.json({ conversations: rows });
     }
     if (action === 'admin-messages') {
