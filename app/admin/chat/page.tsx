@@ -1,7 +1,7 @@
 'use client';
 import { useCallback, useEffect, useState } from 'react';
 
-type Conversation = { id:string; visitor_name:string; status:string; last_message:string; created_at:string; updated_at:string };
+type Conversation = { id:string; visitor_name:string; visitor_phone?:string|null; channel?:string; status:string; last_message:string; created_at:string; updated_at:string };
 type Message = { id:number; sender:string; message:string; created_at:string };
 const endpoint='/api/chat';
 export default function ChatAdmin(){
