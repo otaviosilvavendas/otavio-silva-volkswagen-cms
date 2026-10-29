@@ -74,7 +74,27 @@ export async function POST(request: NextRequest) {
       const conversationId = clean(body.conversationId, 50);
       const message = clean(body.message, 2000);
       if (!isUuid(conversationId) || !message) return NextResponse.json({ error: 'Escreva uma resposta.' }, { status: 400 });
-      await db('chat_messages', { method: 'POST', headers: { Prefer: 'return=minimal' }, body: JSON.stringify({ conversation_id: conversationId, sender: 'admin', message }) });
+      const info = await db(`chat_conversations?id=eq.${conversationId}&select=channel,visitor_phone,status`);
+      const conv = info?.[0];
+      if (!conv || conv.status !== 'open') return NextResponse.json({ error: 'Esta conversa não está disponível.' }, { status: 404 });
+      let externalId: string | null = null;
+      if (conv.channel === 'whatsapp') {
+        const token = process.env.WHATSAPP_ACCESS_TOKEN;
+        const phoneId = process.env.WHATSAPP_PHONE_NUMBER_ID;
+        const version = process.env.WHATSAPP_GRAPH_API_VERSION || 'v26.0';
+        const to = String(conv.visitor_phone || '').replace(/[^0-9]/g, '');
+        if (!token || !phoneId || !to) return NextResponse.json({ error: 'Integração WhatsApp incompleta nas variáveis privadas da Vercel.' }, { status: 503 });
+        const sent = await fetch('https://graph.facebook.com/' + version + '/' + phoneId + '/messages', {
+          method: 'POST',
+          headers: { 'Authorization': 'Bearer ' + token, 'Content-Type': 'application/json' },
+          body: JSON.stringify({ messaging_product: 'whatsapp', to, type: 'text', text: { body: message } }),
+          cache: 'no-store'
+        });
+        const result = await sent.json().catch(() => ({}));
+        if (!sent.ok) return NextResponse.json({ error: result?.error?.message || 'A Meta não aceitou o envio pelo WhatsApp.' }, { status: 502 });
+        externalId = result?.messages?.[0]?.id || null;
+      }
+      await db('chat_messages', { method: 'POST', headers: { Prefer: 'return=minimal' }, body: JSON.stringify({ conversation_id: conversationId, sender: 'admin', message, external_message_id: externalId }) });
       await db(`chat_conversations?id=eq.${conversationId}`, { method: 'PATCH', headers: { Prefer: 'return=minimal' }, body: JSON.stringify({ last_message: message, updated_at: new Date().toISOString() }) });
       return NextResponse.json({ success: true });
     }
