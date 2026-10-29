@@ -41,6 +41,30 @@ function render(){
  $('headline').innerHTML=esc(data.headline).split('|').join('<br><span>');
  $('headline').innerHTML+='</span>';
  $('intro').textContent=data.intro;
+ // Faixa de oportunidades posicionada entre o banner principal e a vitrine de modelos.
+ function arrangeOffersIntro(){
+  const modelGrid=$('modelGrid');
+  if(!modelGrid)return;
+  const modelSection=modelGrid.closest('section')||modelGrid.closest('.section')||modelGrid.parentElement;
+  if(!modelSection)return;
+  let intro=document.getElementById('offersIntroPanel');
+  if(!intro){
+   intro=document.createElement('section');
+   intro.id='offersIntroPanel';
+   intro.innerHTML='<div class="offers-intro-inner"><span class="offers-intro-kicker">OPORTUNIDADES SOB CONSULTA</span><h2>Vamos encontrar a melhor condição para você.</h2><p>Consulte ofertas disponíveis, bônus na troca e opções de financiamento. Valores, versões, estoque e condições são confirmados no momento da proposta.</p><a class="offers-intro-button" href="'+wa('Olá Otávio! Quero consultar as ofertas disponíveis, bônus na troca e opções de financiamento.')+' " target="_blank" rel="noopener">Consultar ofertas →</a></div>';
+   const style=document.createElement('style');
+   style.id='offersIntroPanelStyles';
+   style.textContent='#offersIntroPanel{padding:38px 0;background:#f4f7fa;color:#fff}#offersIntroPanel .offers-intro-inner{width:min(1360px,92%);margin:0 auto;padding:42px;border-radius:24px;background:linear-gradient(110deg,#071626,#153b5b);box-sizing:border-box}#offersIntroPanel .offers-intro-kicker{display:block;color:#79c4ff;font-size:12px;font-weight:900;letter-spacing:3px;margin-bottom:12px}#offersIntroPanel h2{font-size:clamp(25px,3vw,34px);line-height:1.2;margin:0 0 18px;color:#fff;letter-spacing:-.5px}#offersIntroPanel p{max-width:760px;font-size:17px;line-height:1.8;color:#e1ebf5;margin:0 0 20px}#offersIntroPanel .offers-intro-button{display:inline-flex;align-items:center;justify-content:center;min-height:52px;padding:0 22px;border-radius:15px;background:#078ff0;color:#fff;text-decoration:none;font-weight:800}#offersIntroPanel .offers-intro-button:hover{background:#087bd0}@media(max-width:650px){#offersIntroPanel{padding:24px 0}#offersIntroPanel .offers-intro-inner{padding:28px 22px;border-radius:18px}#offersIntroPanel .offers-intro-kicker{font-size:10px;letter-spacing:2px}#offersIntroPanel p{font-size:15px;line-height:1.65}}';
+   document.head.appendChild(style);
+  }
+  const hero=document.querySelector('.hero');
+  if(hero&&hero.parentElement&&intro.previousElementSibling!==hero)hero.insertAdjacentElement('afterend',intro);
+  else if(modelSection.parentElement&&intro.parentElement!==modelSection.parentElement)modelSection.parentElement.insertBefore(intro,modelSection);
+  const headings=[...modelSection.querySelectorAll('h1,h2,h3')];
+  const heading=headings.find(h=>/encontre seu volkswagen/i.test(h.textContent));
+  if(heading)heading.textContent='Conheça os modelos abaixo:';
+ }
+ arrangeOffersIntro();
  $('heroCta').href=wa('Olá Otávio! Quero conhecer as opções Volkswagen.');$('heroCta').textContent='FALAR COM OTÁVIO';
  // Miniaturas dos modelos e popup sem abrir nova janela.
  const modelGrid=$('modelGrid');
