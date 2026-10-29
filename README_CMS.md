@@ -33,3 +33,18 @@ Depois da implantação única do CMS, **não é necessário fazer nova implanta
 
 ## Segurança
 O painel usa autenticação do Supabase. O banco possui Row Level Security e as alterações ficam restritas a usuários autenticados.
+
+
+## Chat em tempo real do site
+
+O chat do site usa as tabelas `chat_conversations` e `chat_messages`.
+
+1. No Supabase, abra **SQL Editor** e execute o conteúdo de `supabase/chat-schema.sql`.
+2. Na Vercel, abra **Settings → Environment Variables** e adicione:
+   - `SUPABASE_SERVICE_ROLE_KEY`: a chave **service_role/secret** do projeto Supabase. Mantenha-a apenas no servidor; nunca use o prefixo `NEXT_PUBLIC_`.
+   - `CHAT_ADMIN_PASSWORD`: crie uma senha forte exclusiva para o painel de atendimento.
+3. Confirme que `NEXT_PUBLIC_SUPABASE_URL` já está definido (é usado pelo endpoint).
+4. Faça novo deploy de produção após salvar as variáveis.
+5. Acesse `/admin/chat`, entre com `CHAT_ADMIN_PASSWORD` e mantenha a página aberta para receber/responder conversas.
+
+As mensagens ficam no banco e o cliente conversa dentro do site. A caixa de entrada atualiza automaticamente a cada poucos segundos. O chat não abre o WhatsApp.
