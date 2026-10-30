@@ -71,16 +71,25 @@ export async function POST(request: NextRequest) {
     for (const entry of payload.entry || []) {
       for (const change of entry.changes || []) {
         const value = change.value || {};
-        for (const message of value.messages || []) {
-          const phone = String(message.from || '').replace(/\D/g, '');
-          const text = messageText(message).slice(0, 2000);
+        // Standard customer messages arrive in "messages". In Coexistence,
+        // messages sent by the business from the WhatsApp Business app arrive
+        // separately in "smb_message_echoes" and must be mirrored as admin replies.
+        const events = [
+          ...(change.field === 'messages' ? (value.messages || []).map((message: any) => ({ message, sender: 'visitor' as const, phone: message.from })) : []),
+          ...(change.field === 'smb_message_echoes' ? (value.message_echoes || []).map((message: any) => ({ message, sender: 'admin' as const, phone: message.to })) : []),
+        ];
+
+        for (const event of events) {
+          const phone = String(event.phone || '').replace(/\D/g, '');
+          const text = messageText(event.message).slice(0, 2000);
           if (!phone || !text) continue;
           const contact = (value.contacts || []).find((c: any) => String(c.wa_id || '').replace(/\D/g, '') === phone);
           const name = String(contact?.profile?.name || phone).trim().slice(0, 100);
           const existing = await db(
-            `chat_conversations?channel=eq.whatsapp&visitor_phone=eq.${encodeURIComponent(phone)}&status=eq.open&select=id&order=updated_at.desc&limit=1`
+            `chat_conversations?channel=eq.whatsapp&visitor_phone=eq.${encodeURIComponent(phone)}&status=eq.open&select=id,visitor_name&order=updated_at.desc&limit=1`
           );
           let conversationId = existing?.[0]?.id;
+          const visitorName = event.sender === 'visitor' ? name : String(existing?.[0]?.visitor_name || phone);
           if (!conversationId) {
             conversationId = crypto.randomUUID();
             await db('chat_conversations', {
@@ -88,7 +97,7 @@ export async function POST(request: NextRequest) {
               headers: { Prefer: 'return=minimal' },
               body: JSON.stringify({
                 id: conversationId,
-                visitor_name: name,
+                visitor_name: visitorName,
                 visitor_phone: phone,
                 channel: 'whatsapp',
                 status: 'open',
@@ -96,13 +105,13 @@ export async function POST(request: NextRequest) {
               }),
             });
           }
-          const externalId = String(message.id || '').slice(0, 200);
+          const externalId = String(event.message.id || '').slice(0, 200);
           await db('chat_messages', {
             method: 'POST',
             headers: { Prefer: 'resolution=ignore-duplicates,return=minimal' },
             body: JSON.stringify({
               conversation_id: conversationId,
-              sender: 'visitor',
+              sender: event.sender,
               message: text,
               external_message_id: externalId || null,
             }),
@@ -110,7 +119,7 @@ export async function POST(request: NextRequest) {
           await db(`chat_conversations?id=eq.${conversationId}`, {
             method: 'PATCH',
             headers: { Prefer: 'return=minimal' },
-            body: JSON.stringify({ visitor_name: name, visitor_phone: phone, last_message: text, updated_at: new Date().toISOString() }),
+            body: JSON.stringify({ visitor_name: visitorName, visitor_phone: phone, last_message: text, updated_at: new Date().toISOString() }),
           });
         }
       }
