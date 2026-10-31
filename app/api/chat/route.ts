@@ -57,6 +57,52 @@ export async function POST(request: NextRequest) {
       const rows = await db(`chat_messages?conversation_id=eq.${conversationId}&select=id,sender,message,created_at&order=created_at.asc&limit=300`);
       return NextResponse.json({ messages: rows });
     }
+    if (action === 'whatsapp-diagnostic') {
+      if (!adminOk(request)) return NextResponse.json({ error: 'Senha de atendimento inválida.' }, { status: 401 });
+      const token = process.env.WHATSAPP_ACCESS_TOKEN;
+      const phoneId = process.env.WHATSAPP_PHONE_NUMBER_ID;
+      const version = process.env.WHATSAPP_GRAPH_API_VERSION || 'v26.0';
+      if (!token || !phoneId) {
+        return NextResponse.json({
+          ok: false,
+          tokenConfigured: Boolean(token),
+          phoneNumberIdConfigured: Boolean(phoneId),
+          error: 'Falta WHATSAPP_ACCESS_TOKEN ou WHATSAPP_PHONE_NUMBER_ID nas variáveis de produção.'
+        }, { status: 503 });
+      }
+      const url = new URL(`https://graph.facebook.com/${version}/${encodeURIComponent(phoneId)}`);
+      url.searchParams.set('fields', 'id,is_on_biz_app,platform_type');
+      const response = await fetch(url.toString(), {
+        method: 'GET',
+        headers: { Authorization: `Bearer ${token}` },
+        cache: 'no-store'
+      });
+      const result = await response.json().catch(() => ({}));
+      if (!response.ok) {
+        return NextResponse.json({
+          ok: false,
+          tokenConfigured: true,
+          phoneNumberIdConfigured: true,
+          httpStatus: response.status,
+          errorCode: result?.error?.code ?? null,
+          errorSubcode: result?.error?.error_subcode ?? null,
+          error: result?.error?.message || 'A Meta recusou a consulta. Verifique validade e permissões do token.'
+        }, { status: 502 });
+      }
+      return NextResponse.json({
+        ok: true,
+        tokenConfigured: true,
+        phoneNumberIdConfigured: true,
+        phoneNumberId: result?.id || phoneId,
+        isOnBizApp: result?.is_on_biz_app ?? null,
+        platformType: result?.platform_type ?? null,
+        coexistence: result?.is_on_biz_app === true && result?.platform_type === 'CLOUD_API'
+          ? 'confirmed'
+          : result?.is_on_biz_app === false
+            ? 'not_enabled'
+            : 'inconclusive'
+      });
+    }
     if (action === 'admin-list') {
       if (!adminOk(request)) return NextResponse.json({ error: 'Senha de atendimento inválida.' }, { status: 401 });
       const rows = await db('chat_conversations?select=id,visitor_name,visitor_phone,channel,status,last_message,created_at,updated_at&order=updated_at.desc&limit=100');
