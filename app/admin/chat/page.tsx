@@ -12,7 +12,9 @@ export default function ChatAdmin(){
  const [messages,setMessages]=useState<Message[]>([]);
  const [reply,setReply]=useState('');
  const [error,setError]=useState('');
- const [busy,setBusy]=useState(false);\n const [diagnostic,setDiagnostic]=useState<any>(null);\n const [diagnosticBusy,setDiagnosticBusy]=useState(false);
+ const [busy,setBusy]=useState(false);
+ const [diagnostic,setDiagnostic]=useState<any>(null);
+ const [diagnosticBusy,setDiagnosticBusy]=useState(false);
  const call=useCallback(async(action:string,extra:Record<string,unknown>={})=>{
   const r=await fetch(endpoint,{method:'POST',headers:{'Content-Type':'application/json','x-chat-admin-password':password},body:JSON.stringify({action,...extra}),cache:'no-store'});
   const data=await r.json();if(!r.ok)throw new Error(data.error||'Não foi possível concluir a ação.');return data;
@@ -30,7 +32,8 @@ export default function ChatAdmin(){
  useEffect(()=>{if(authenticated){void refresh();const id=window.setInterval(()=>void refresh(),4000);return()=>window.clearInterval(id);}},[authenticated,refresh]);
  useEffect(()=>{if(authenticated&&selected){void refreshMessages();const id=window.setInterval(()=>void refreshMessages(),2500);return()=>window.clearInterval(id);}},[authenticated,selected,refreshMessages]);
  async function login(e:React.FormEvent){e.preventDefault();setBusy(true);setError('');try{await call('admin-list');setAuthenticated(true);}catch(err){setError(err instanceof Error?err.message:'Falha no login.');}finally{setBusy(false);}}
- async function runDiagnostic(){setDiagnosticBusy(true);setDiagnostic(null);setError('');try{const result=await call('whatsapp-diagnostic');setDiagnostic(result);}catch(err){setDiagnostic({ok:false,error:err instanceof Error?err.message:'Falha na consulta.'});}finally{setDiagnosticBusy(false);}}\n async function send(e:React.FormEvent){e.preventDefault();if(!reply.trim()||!selected)return;setBusy(true);try{await call('reply',{conversationId:selected,message:reply.trim()});setReply('');await refreshMessages();await refresh();}catch(err){setError(err instanceof Error?err.message:'Não foi possível enviar.');}finally{setBusy(false);}}
+ async function runDiagnostic(){setDiagnosticBusy(true);setDiagnostic(null);setError('');try{const result=await call('whatsapp-diagnostic');setDiagnostic(result);}catch(err){setDiagnostic({ok:false,error:err instanceof Error?err.message:'Falha na consulta.'});}finally{setDiagnosticBusy(false);}}
+ async function send(e:React.FormEvent){e.preventDefault();if(!reply.trim()||!selected)return;setBusy(true);try{await call('reply',{conversationId:selected,message:reply.trim()});setReply('');await refreshMessages();await refresh();}catch(err){setError(err instanceof Error?err.message:'Não foi possível enviar.');}finally{setBusy(false);}}
  const current=conversations.find(c=>c.id===selected);
  return <main style={{minHeight:'100vh',background:'#f3f6fa',color:'#16263a',padding:24,fontFamily:'Arial,sans-serif'}}>
   <div style={{maxWidth:1200,margin:'0 auto'}}>
