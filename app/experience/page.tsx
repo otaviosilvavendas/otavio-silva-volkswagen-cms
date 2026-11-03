@@ -36,8 +36,11 @@ export default function CompreVolksExperience() {
     controls.dampingFactor = 0.06;
     controls.minDistance = 3.6;
     controls.maxDistance = 17;
-    controls.maxPolarAngle = Math.PI * 0.49;
-    controls.minPolarAngle = 0.22;
+    // Rotação horizontal בלבד: mantém a câmera na mesma altura e impede inclinação vertical.
+    const fixedPolarAngle = camera.position.clone().sub(controls.target).angleTo(new THREE.Vector3(0, 1, 0));
+    controls.minPolarAngle = fixedPolarAngle;
+    controls.maxPolarAngle = fixedPolarAngle;
+    controls.enablePan = false;
     controls.update();
 
     scene.add(new THREE.HemisphereLight('#d8eaff', '#172338', 2.0));
