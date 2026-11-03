@@ -114,8 +114,8 @@ export default function CompreVolksExperience() {
       const m = new THREE.Mesh(new THREE.ShapeGeometry(s,16),glass); m.position.z=z; car.add(m);
     };
     for (const z of [-0.826,0.826]) {
-      sidePane([[-1.12,1.57],[-0.76,2.17],[-0.15,2.17],[-0.15,1.57]],z);
-      sidePane([[-0.08,1.57],[-0.08,2.17],[0.52,2.17],[0.98,1.57]],z);
+      sidePane([[-1.12,1.57],[-0.76,2.17],[-0.15,2.17],[-0.15,1.57]],Math.sign(z)*0.875);
+      sidePane([[-0.08,1.57],[-0.08,2.17],[0.52,2.17],[0.98,1.57]],Math.sign(z)*0.875);
       const belt=new THREE.Mesh(new THREE.BoxGeometry(2.5,0.035,0.035),chrome); belt.position.set(-0.02,1.53,z*1.012); car.add(belt);
       const pillar=new THREE.Mesh(new THREE.BoxGeometry(0.055,0.67,0.045),dark); pillar.position.set(-0.12,1.86,z*1.02); car.add(pillar);
       const handle=new THREE.Mesh(new THREE.BoxGeometry(0.22,0.045,0.045),chrome); handle.position.set(-0.55,1.28,z*1.02); car.add(handle);
