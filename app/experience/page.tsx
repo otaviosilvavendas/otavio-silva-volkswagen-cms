@@ -86,25 +86,25 @@ export default function CompreVolksExperience() {
 
     // Demonstration SUV assembled from editable geometric parts.
     const car = new THREE.Group();
-    const paint = new THREE.MeshStandardMaterial({ color: '#aebdca', metalness: 0.78, roughness: 0.23 });
+    const paint = new THREE.MeshStandardMaterial({ color: '#dce4e7', metalness: 0.72, roughness: 0.2 });
     const dark = new THREE.MeshStandardMaterial({ color: '#101923', metalness: 0.35, roughness: 0.22 });
     const glass = new THREE.MeshStandardMaterial({ color: '#142b40', metalness: 0.55, roughness: 0.12 });
     const trim = new THREE.MeshStandardMaterial({ color: '#263442', metalness: 0.72, roughness: 0.28 });
     const lamp = new THREE.MeshStandardMaterial({ color: '#d9f1ff', emissive: '#8acfff', emissiveIntensity: 1.7 });
-    const body = new THREE.Mesh(new THREE.BoxGeometry(4.15, 0.92, 1.82), paint);
+    const body = new THREE.Mesh(new THREE.BoxGeometry(4.35, 0.88, 1.94), paint);
     body.position.y = 0.95;
     body.castShadow = true;
     car.add(body);
-    const hood = new THREE.Mesh(new THREE.BoxGeometry(1.15, 0.36, 1.78), paint);
-    hood.position.set(1.42, 1.38, 0);
+    const hood = new THREE.Mesh(new THREE.BoxGeometry(1.32, 0.32, 1.9), paint);
+    hood.position.set(1.48, 1.37, 0);
     hood.castShadow = true;
     car.add(hood);
-    const cabin = new THREE.Mesh(new THREE.BoxGeometry(2.12, 0.94, 1.56), glass);
-    cabin.position.set(-0.25, 1.78, 0);
+    const cabin = new THREE.Mesh(new THREE.BoxGeometry(2.28, 0.98, 1.68), glass);
+    cabin.position.set(-0.22, 1.78, 0);
     cabin.castShadow = true;
     car.add(cabin);
-    const roof = new THREE.Mesh(new THREE.BoxGeometry(1.9, 0.12, 1.62), paint);
-    roof.position.set(-0.28, 2.28, 0);
+    const roof = new THREE.Mesh(new THREE.BoxGeometry(2.05, 0.13, 1.76), paint);
+    roof.position.set(-0.22, 2.29, 0);
     car.add(roof);
     const frontGlass = new THREE.Mesh(new THREE.BoxGeometry(0.08, 0.76, 1.5), glass);
     frontGlass.position.set(0.83, 1.83, 0);
@@ -121,18 +121,40 @@ export default function CompreVolksExperience() {
     sideWindow2.position.set(-1.05, 1.84, 0.795);
     car.add(sideWindow2);
 
+    // Frente inspirada no Taos: grade ampla, barra de luz e emblema central.
+    const grille = new THREE.Mesh(new THREE.BoxGeometry(0.13, 0.42, 1.78), dark);
+    grille.position.set(2.19, 0.96, 0);
+    car.add(grille);
+    const lightBar = new THREE.Mesh(new THREE.BoxGeometry(0.07, 0.055, 1.72), lamp);
+    lightBar.position.set(2.23, 1.42, 0);
+    car.add(lightBar);
+    const emblem = new THREE.Mesh(new THREE.CylinderGeometry(0.19, 0.19, 0.045, 48), new THREE.MeshStandardMaterial({color:'#c8d2da',metalness:0.9,roughness:0.16}));
+    emblem.rotation.z = Math.PI / 2;
+    emblem.position.set(2.27, 1.2, 0);
+    car.add(emblem);
+    const lowerGrille = new THREE.Mesh(new THREE.BoxGeometry(0.16, 0.35, 1.66), dark);
+    lowerGrille.position.set(2.18, 0.65, 0);
+    car.add(lowerGrille);
+    for (const z of [-0.99, 0.99]) {
+      const cladding = new THREE.Mesh(new THREE.BoxGeometry(3.45, 0.2, 0.055), dark);
+      cladding.position.set(-0.05, 0.55, z);
+      car.add(cladding);
+      const rail = new THREE.Mesh(new THREE.BoxGeometry(1.75, 0.07, 0.08), trim);
+      rail.position.set(-0.28, 2.38, z * 0.78);
+      car.add(rail);
+    }
     for (const z of [-0.96, 0.96]) {
       for (const x of [-1.35, 1.35]) {
-        const wheel = new THREE.Mesh(new THREE.CylinderGeometry(0.49, 0.49, 0.22, 40), dark);
+        const wheel = new THREE.Mesh(new THREE.CylinderGeometry(0.53, 0.53, 0.24, 48), dark);
         wheel.rotation.x = Math.PI / 2;
         wheel.position.set(x, 0.58, z);
         wheel.castShadow = true;
         car.add(wheel);
-        const rim = new THREE.Mesh(new THREE.CylinderGeometry(0.29, 0.29, 0.235, 32), trim);
+        const rim = new THREE.Mesh(new THREE.CylinderGeometry(0.36, 0.36, 0.255, 40), trim);
         rim.rotation.x = Math.PI / 2;
         rim.position.set(x, 0.58, z * 1.01);
         car.add(rim);
-        const hub = new THREE.Mesh(new THREE.CylinderGeometry(0.09, 0.09, 0.245, 24), paint);
+        const hub = new THREE.Mesh(new THREE.CylinderGeometry(0.105, 0.105, 0.265, 32), paint);
         hub.rotation.x = Math.PI / 2;
         hub.position.set(x, 0.58, z * 1.02);
         car.add(hub);
@@ -201,26 +223,26 @@ export default function CompreVolksExperience() {
       <section className="experience-intro">
         <div>
           <span className="eyebrow">UMA NOVA FORMA DE CONHECER</span>
-          <h1>Entre no universo <span>Volkswagen.</span></h1>
-          <p>Explore nosso showroom virtual em 3D. Arraste para olhar ao redor e use o scroll para se aproximar.</p>
+          <h1>Conheça o <span>Taos Highline.</span></h1>
+          <p>Uma primeira experiência interativa inspirada no Taos Highline fotografado na Caraigá. Gire o veículo, aproxime e explore os detalhes.</p>
         </div>
         <div className="experience-status"><i /> PROTÓTIPO INTERATIVO</div>
       </section>
       <section className="viewer-shell">
-        <div className="viewer-topline"><span>SHOWROOM DIGITAL</span><span>MODELO 3D DEMONSTRATIVO</span></div>
+        <div className="viewer-topline"><span>SHOWROOM DIGITAL</span><span>TAOS HIGHLINE • PROTÓTIPO 3D</span></div>
         <div className="viewer" ref={mountRef}>
           {!ready && <div className="loading-state">Preparando seu showroom...</div>}
-          <div className="viewer-caption"><strong>SUV CONCEITO</strong><span>Representação geométrica experimental — não é um modelo oficial Volkswagen.</span></div>
+          <div className="viewer-caption"><strong>VOLKSWAGEN TAOS HIGHLINE</strong><span>Protótipo visual 3D inspirado nas fotos reais. Não representa um modelo oficial homologado.</span></div>
         </div>
         <div className="viewer-controls">
           <span>🖱 Arraste para girar</span><span>＋ / − Scroll para aproximar</span><span>↔ Explore diferentes ângulos</span>
         </div>
       </section>
       <section className="experience-bottom">
-        <div><span className="eyebrow">PRÓXIMA ETAPA</span><h2>O próximo passo é entrar no carro.</h2><p>Vamos substituir este veículo demonstrativo por um modelo 3D licenciado e preparar a exploração do interior.</p></div>
+        <div><span className="eyebrow">PRÓXIMA ETAPA</span><h2>Seu próximo Volkswagen merece ser explorado.</h2><p>Esta versão apresenta proporções, cor clara, rodas, assinatura frontal e detalhes inspirados no Taos das fotos. A próxima evolução será incorporar o modelo 3D oficial e os ambientes internos.</p></div>
         <a href="https://wa.me/5511947858479?text=Ol%C3%A1%20Ot%C3%A1vio!%20Quero%20conhecer%20mais%20sobre%20um%20Volkswagen." target="_blank" rel="noopener noreferrer">Falar com Otávio ↗</a>
       </section>
-      <footer className="experience-footer">COMPREVOLKS EXPERIENCE <span>•</span> PROJETO EXPERIMENTAL</footer>
+      <footer className="experience-footer">COMPREVOLKS EXPERIENCE <span>•</span> TAOS HIGHLINE • EXPERIÊNCIA DIGITAL</footer>
       <style jsx global>{`
         .experience-page{min-height:100vh;background:#06172a;color:#f5f9ff;padding:0 0 30px;font-family:Arial,sans-serif}
         .experience-nav{height:76px;padding:0 clamp(18px,5vw,72px);display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #18324c;background:#041020}
