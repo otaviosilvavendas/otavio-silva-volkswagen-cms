@@ -15,7 +15,18 @@ var selectedVersion=3,selectedColor=0,activeTab="versoes",panel=modal.querySelec
 function esc(s){return String(s).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})}
 function v(){return versions[selectedVersion]}function c(){return colors[selectedColor]}
 function wa(){return "https://wa.me/5511947858479?text="+encodeURIComponent("Olá Otávio! Tenho interesse no Volkswagen "+v().name+" MY27, na cor "+c()[0]+". Gostaria de receber uma proposta.")}
-function visual(){if(c()[2]){image.src=c()[2];image.alt="Volkswagen Tera na cor "+c()[0];note.textContent="Imagem ilustrativa · "+c()[0]}else{note.textContent="Imagem desta cor ainda não disponível · "+c()[0]}modal.querySelector("#teraConfigSelected").textContent=v().name}
+function visual(){
+ var tabPhotos={
+ interior:{src:"https://cdn.dealerspace.ai/dealersites/vehicles/models/volkswagen/foto890_45843.webp",alt:"Interior do Volkswagen Tera",note:"Interior · galeria Volkswagen Caraigá"},
+ ambiente:{src:"https://cdn.dealerspace.ai/dealersites/1-ft/Tera%20%2817%29.jpg",alt:"Painel e iluminação ambiente do Volkswagen Tera",note:"Ambiente interno · Volkswagen Caraigá"},
+ interacao:{src:"https://cdn.dealerspace.ai/dealersites/1-ft/Tera%20%286%29.jpg",alt:"Central multimídia VW Play do Volkswagen Tera",note:"VW Play Connect · Volkswagen Caraigá"}
+ };
+ var photo=tabPhotos[activeTab];
+ if(photo){image.src=photo.src;image.alt=photo.alt;note.textContent=photo.note}
+ else if(c()[2]){image.src=c()[2];image.alt="Volkswagen Tera na cor "+c()[0];note.textContent="Imagem ilustrativa · "+c()[0]}
+ else{note.textContent="Imagem desta cor ainda não disponível · "+c()[0]}
+ modal.querySelector("#teraConfigSelected").textContent=v().name
+}
 function list(items){return "<div class='tera-config-detail'><h3>Principais equipamentos</h3><ul>"+items.map(function(x){return "<li>"+esc(x)+"</li>"}).join("")+"</ul></div>"}
 function render(){
  visual();modal.querySelectorAll(".tera-config-tab").forEach(function(b){b.classList.toggle("active",b.dataset.tab===activeTab)});
