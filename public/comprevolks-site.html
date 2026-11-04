@@ -194,4 +194,13 @@ document.getElementById("leadForm").addEventListener("submit",e=>{e.preventDefau
  setInterval(()=>{if(panel.classList.contains('open'))void refresh();},3000);
 })();
 </script>
+<script src="/assets/tera-configurator.js?v=2"></script>
+<script>
+document.addEventListener('click',function(event){
+  const trigger=event.target.closest('[data-model]');
+  if(!trigger||String(trigger.dataset.model||'').trim().toLowerCase()!=='tera')return;
+  event.preventDefault();
+  if(typeof window.openTeraConfigurator==='function')window.openTeraConfigurator();
+});
+</script>
 </body></html>
