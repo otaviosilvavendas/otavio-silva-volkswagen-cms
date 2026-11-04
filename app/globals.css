@@ -163,3 +163,14 @@
 /* A foto do hero precisa ficar acima do fundo da seção e atrás do texto */
 .hero-photo.hero-offer.twin-panel{z-index:0!important}
 .hero-grid{position:relative;z-index:1!important}
+
+
+/* Conteúdo indexável e comparativo do Volkswagen Tera MY27 */
+.tera-seo-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:24px}
+.tera-seo-card{padding:24px;border:1px solid #294763;border-radius:14px;background:linear-gradient(145deg,#102d4b,#0a2038);color:#f7fbff}
+.tera-seo-card h3{font-size:20px;margin:0 0 8px}
+.tera-seo-card strong{color:#83caff;font-size:14px}
+.tera-seo-card p{font-size:13px;line-height:1.65;color:#c8d7e6}
+.tera-seo-card a{display:inline-flex;margin-top:8px;padding:11px 16px;border-radius:99px;background:#0866f5;color:#fff;text-decoration:none;font-size:12px;font-weight:800}
+.tera-seo-note{font-size:12px;color:#a9bfd3;line-height:1.6;margin-top:18px}
+@media(max-width:650px){.tera-seo-grid{grid-template-columns:1fr}.tera-seo-card{padding:20px}}
