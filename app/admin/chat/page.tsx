@@ -27,12 +27,13 @@ export default function ChatAdmin(){
   if(!authenticated)return;
   try{const data=await call('admin-list');setConversations(data.conversations||[]);if(!selected&&data.conversations?.length)setSelected(data.conversations[0].id);setError('');}
   catch(e){setError(e instanceof Error?e.message:'Erro de conexão.');}
- },[authenticated,call,selected,alertsEnabled]);
+ },[authenticated,call,selected]);
  const refreshMessages=useCallback(async()=>{
   if(!authenticated||!selected)return;
-  try{const data=await call('admin-messages',{conversationId:selected});const incoming=(data.messages||[]) as Message[];const visitorMessages=incoming.filter(m=>m.sender==='visitor');const newest=visitorMessages.length?Math.max(...visitorMessages.map(m=>m.id)):null;const previous=lastVisitorMessageId.current;if(previous!==null&&newest!==null&&newest>previous){const fresh=visitorMessages.filter(m=>m.id>previous);if(alertsEnabled&&fresh.length){playAlert();if(document.hidden&&'Notification'in window&&Notification.permission==='granted'){new Notification('Nova mensagem — CompreVolks',{body:fresh[fresh.length-1].message.slice(0,120),tag:'comprevolks-chat'});}}}if(newest!==null)lastVisitorMessageId.current=newest;setMessages(incoming);}
+  try{const data=await call('admin-messages',{conversationId:selected});const incoming=(data.messages||[]) as Message[];const visitorMessages=incoming.filter(m=>m.sender==='visitor');const newest=visitorMessages.length?Math.max(...visitorMessages.map(m=>m.id)):null;const previous=lastVisitorMessageId.current;if(previous!==null&&newest!==null&&newest>previous){const fresh=visitorMessages.filter(m=>m.id>previous);if(alertsEnabled&&fresh.length){playAlert();if(document.hidden&&'Notification'in window&&Notification.permission==='granted'){new Notification('Nova mensagem — CompreVolks',{body:fresh[fresh.length-1].message.slice(0,120),tag:'comprevolks-chat'});}}}lastVisitorMessageId.current=newest??(previous??0);setMessages(incoming);}
   catch(e){setError(e instanceof Error?e.message:'Erro ao carregar mensagens.');}
- },[authenticated,call,selected]);
+ },[authenticated,call,selected,alertsEnabled]);
+ useEffect(()=>{lastVisitorMessageId.current=null;},[selected]);
  useEffect(()=>{if(authenticated){void refresh();const id=window.setInterval(()=>void refresh(),4000);return()=>window.clearInterval(id);}},[authenticated,refresh]);
  useEffect(()=>{if(authenticated&&selected){void refreshMessages();const id=window.setInterval(()=>void refreshMessages(),2500);return()=>window.clearInterval(id);}},[authenticated,selected,refreshMessages]);
  function playAlert(){try{const Ctx=window.AudioContext||(window as any).webkitAudioContext;if(!Ctx)return;const ctx=audioContext.current||new Ctx();audioContext.current=ctx;if(ctx.state==='suspended')void ctx.resume();const now=ctx.currentTime;[0,0.22].forEach((offset)=>{const osc=ctx.createOscillator();const gain=ctx.createGain();osc.type='sine';osc.frequency.value=880;gain.gain.setValueAtTime(0.0001,now+offset);gain.gain.exponentialRampToValueAtTime(0.18,now+offset+0.015);gain.gain.exponentialRampToValueAtTime(0.0001,now+offset+0.16);osc.connect(gain);gain.connect(ctx.destination);osc.start(now+offset);osc.stop(now+offset+0.17);});}catch{}}
