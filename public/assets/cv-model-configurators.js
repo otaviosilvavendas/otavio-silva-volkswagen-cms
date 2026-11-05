@@ -89,6 +89,6 @@ function open(key){current=key;vi=0;pi=(key==='nivus'?2:0);ci=0;render();overlay
 function close(){overlay.classList.remove('open');document.body.style.overflow=''}
 overlay.addEventListener('click',function(e){if(e.target===overlay||e.target.closest('.cvx-close'))close();var v=e.target.closest('[data-v]'),p=e.target.closest('[data-p]'),c=e.target.closest('[data-c]');if(v){vi=+v.dataset.v;if(current==='nivus'||current==='tcross')pi=vi;render()}if(p){pi=+p.dataset.p;render()}if(c){ci=+c.dataset.c;render()}});
 document.addEventListener('keydown',function(e){if(e.key==='Escape'&&overlay.classList.contains('open'))close()});
-document.addEventListener('click',function(e){var a=e.target.closest('[data-model]');if(!a)return;var k=String(a.dataset.model||'').trim().toLowerCase();if(k==='jetta gli')k='jetta';if(['polo','virtus','tiguan','nivus','tcross','taos','jetta'].indexOf(k)<0)return;e.preventDefault();e.stopImmediatePropagation();open(k)},true);
+document.addEventListener('click',function(e){var a=e.target.closest('[data-model]');if(!a)return;var k=String(a.dataset.model||'').trim().toLowerCase();if(k==='jetta gli')k='jetta';if(k==='t-cross')k='tcross';if(['polo','virtus','tiguan','nivus','tcross','taos','jetta'].indexOf(k)<0)return;e.preventDefault();e.stopImmediatePropagation();open(k)},true);
 window.openCVModelConfigurator=open;
 })();
