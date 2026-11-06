@@ -82,6 +82,8 @@
 .hero-slides{position:absolute;inset:0;z-index:-1;overflow:hidden;background:#09131f}
 .hero-slide{position:absolute;inset:0;opacity:0;background-size:cover;background-position:center 56%;background-repeat:no-repeat;transform:scale(1.025);transition:opacity 1s ease,transform 6s ease}
 .hero-slide.is-active{opacity:1;transform:scale(1)}
+/* Enquadramento dedicado ao banner com a foto do Otávio: preservar o rosto */
+.hero-slide:first-child{background-position:center 18%}
 .hero.hero-premium:after{z-index:0;pointer-events:none}
 .hero.hero-premium .hero-grid{position:relative;z-index:1}
 .hero-controls{position:absolute;z-index:2;right:max(28px,calc((100vw - 1180px)/2));bottom:28px;display:flex;align-items:center;gap:12px}
@@ -90,7 +92,7 @@
 .hero-dot{width:8px;height:8px;padding:0;border:0;border-radius:99px;background:rgba(255,255,255,.55);cursor:pointer;transition:width .25s ease,background .25s ease}
 .hero-dot.is-active{width:25px;background:#fff}
 .hero-arrow:hover,.hero-dot:hover{filter:brightness(1.2)}
-@media(max-width:800px){.hero-slide{background-position:61% center}.hero-controls{right:20px;bottom:22px}}
+@media(max-width:800px){.hero-slide{background-position:61% center}.hero-slide:first-child{background-position:68% 12%}.hero-controls{right:20px;bottom:22px}}
 @media(max-width:560px){.hero-slide{background-position:62% center}.hero-controls{right:16px;bottom:18px}.hero-arrow{width:34px;height:34px}.hero-dots{gap:6px}}
 @media(prefers-reduced-motion:reduce){.hero-slide{transition:none;transform:none}}
 </style></head><body>
