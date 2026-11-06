@@ -77,6 +77,19 @@
 .brand-compre-otavio .brand-compre{display:flex;gap:0}.brand-compre-otavio .brand-compre-white{color:#fff}.brand-compre-otavio .brand-volks-blue{color:#0099e5}.brand-compre-otavio .brand-vw-modern{width:40px;height:40px;flex:0 0 40px;color:#fff}@media(max-width:800px){.brand-compre-otavio .brand-vw-modern{width:29px;height:29px;flex-basis:29px}}@media(max-width:420px){.brand-compre-otavio .brand-vw-modern{width:23px;height:23px;flex-basis:23px}}
 .brand-compre-otavio .brand-otavio{color:#fff!important}.brand-compre-otavio .brand-vw-modern{display:block;object-fit:contain;background:transparent;filter:brightness(0) invert(1);border:0;border-radius:0}
 
+/* Texto exclusivo do slide da Tiguan: substitui o texto genérico no mesmo espaço */
+.hero-copy-tiguan{display:none;position:absolute;z-index:2;left:max(18px,calc((100vw - 1180px)/2));top:50%;transform:translateY(-50%);width:min(520px,48%);color:#fff;text-shadow:0 2px 14px rgba(0,0,0,.5)}
+.hero-copy-tiguan .eyebrow{display:block!important;color:#fff;font-size:11px;letter-spacing:2.5px;font-weight:800}
+.hero-copy-tiguan h2{font-size:clamp(46px,5.2vw,68px);line-height:1.02;margin:0 0 17px;padding-bottom:14px;border-bottom:1px solid rgba(255,255,255,.75);font-weight:850;letter-spacing:-1.8px}
+.hero-copy-tiguan p{max-width:500px;font-size:clamp(19px,2vw,25px);line-height:1.35;margin:8px 0;color:#fff}
+.hero-copy-tiguan p strong{font-weight:850}
+.hero-copy-tiguan .hero-tiguan-condition{font-weight:750}
+.hero-copy-tiguan .hero-tiguan-financing{font-size:clamp(16px,1.55vw,20px);font-weight:650;line-height:1.4;margin-top:13px;max-width:470px}
+.hero-premium.is-tiguan-slide .hero-copy-tiguan{display:block}
+.hero-premium.is-tiguan-slide .hero-copy-premium{display:none}
+@media(max-width:800px){.hero-copy-tiguan{left:24px;top:50%;transform:translateY(-50%);width:min(78%,470px)}.hero-copy-tiguan h2{font-size:clamp(38px,7vw,52px)}.hero-copy-tiguan p{font-size:20px}.hero-copy-tiguan .hero-tiguan-financing{font-size:16px}}
+@media(max-width:560px){.hero-copy-tiguan{left:18px;top:52%;width:84%}.hero-copy-tiguan h2{font-size:38px;margin-bottom:13px;padding-bottom:10px}.hero-copy-tiguan p{font-size:17px}.hero-copy-tiguan .hero-tiguan-financing{font-size:14px;max-width:320px}}
+
 /* Carrossel do banner principal */
 .hero.hero-premium{background-image:none!important;overflow:hidden}
 .hero-slides{position:absolute;inset:0;z-index:-1;overflow:hidden;background:#09131f}
