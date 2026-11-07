@@ -151,6 +151,59 @@
 @media(max-width:800px){.hero-copy-tiguan{left:24px;top:28%;max-width:78%}.hero-copy-tiguan h2{font-size:40px}.hero-copy-tiguan p{font-size:20px}.hero-slide{background-position:61% center}.hero-slide:first-child{background-position:center top}.hero-controls{right:20px;bottom:22px}}
 @media(max-width:560px){.hero-slide{background-position:62% center}.hero-slide:first-child{background-position:68% top;background-size:auto 100%;}.hero-controls{right:16px;bottom:18px}.hero-arrow{width:34px;height:34px}.hero-dots{gap:6px}}
 @media(prefers-reduced-motion:reduce){.hero-slide{transition:none;transform:none}}
+
+/* Ajuste final: identidade visual individual de cada slide */
+.hero.hero-premium .hero-grid{position:relative;z-index:2}
+.hero.hero-premium .hero-copy-premium,
+.hero.hero-premium .hero-copy-personal,
+.hero.hero-premium .hero-copy-tiguan,
+.hero.hero-premium .hero-copy-tcross,
+.hero.hero-premium .hero-copy-taos{display:none!important}
+.hero.hero-premium.is-personal-slide .hero-copy-personal,
+.hero.hero-premium.is-tiguan-slide .hero-copy-tiguan,
+.hero.hero-premium.is-tcross-slide .hero-copy-tcross,
+.hero.hero-premium.is-taos-slide .hero-copy-taos{display:block!important}
+.hero.hero-premium .hero-copy-personal{position:absolute;left:max(4vw,calc((100vw - 1240px)/2));top:27%;bottom:auto;width:min(520px,48%);padding:22px 24px;border-left:5px solid #12b8ff;border-radius:0 14px 14px 0;background:linear-gradient(105deg,rgba(4,18,37,.94),rgba(4,18,37,.72));box-shadow:0 12px 34px rgba(0,0,0,.32);backdrop-filter:blur(6px);color:#fff}
+.hero.hero-premium .hero-copy-personal .personal-kicker{font-size:clamp(16px,2vw,24px);font-weight:950;letter-spacing:.5px;color:#fff;margin:0 0 16px}
+.hero.hero-premium .hero-copy-personal .personal-lines{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.hero.hero-premium .hero-copy-personal .personal-lines span{display:block;padding:10px 12px;border:1px solid rgba(255,255,255,.42);border-radius:8px;background:rgba(255,255,255,.07);font-size:clamp(14px,1.5vw,19px);font-weight:850;line-height:1.2;color:#fff}
+.hero.hero-premium .hero-copy-personal .personal-lines span:nth-child(2),
+.hero.hero-premium .hero-copy-personal .personal-lines span:nth-child(4){color:#ffd166}
+.hero.hero-premium .hero-copy-tiguan{position:absolute;left:max(4vw,calc((100vw - 1240px)/2));top:20%;width:min(470px,43%);max-width:none;padding:0;color:#fff;text-shadow:0 3px 14px rgba(0,0,0,.65)}
+.hero.hero-premium .hero-copy-tiguan h2{font-size:clamp(42px,5.5vw,72px);line-height:1;margin:8px 0 14px;font-weight:950}
+.hero.hero-premium .hero-copy-tiguan .eyebrow{display:block!important;font-size:clamp(15px,1.8vw,22px);font-style:italic;font-weight:900;letter-spacing:.2px;color:#fff}
+.hero.hero-premium .hero-copy-tiguan p{font-size:clamp(18px,2vw,25px);font-weight:850;line-height:1.25;margin:10px 0}
+.hero.hero-premium .hero-copy-tiguan p strong{display:inline-block;padding:9px 15px;border-radius:6px;background:#f5c928;color:#081629;text-shadow:none;font-size:clamp(22px,2.6vw,34px)}
+.hero.hero-premium .hero-copy-tiguan .hero-tiguan-condition{font-size:clamp(21px,2.3vw,29px);font-weight:900}
+.hero.hero-premium .hero-copy-tiguan .hero-tiguan-financing{max-width:390px;font-size:clamp(16px,1.7vw,21px)}
+.hero.hero-premium .hero-copy-tcross{left:max(4vw,calc((100vw - 1240px)/2));top:23%;width:min(520px,47%);padding:24px 28px}
+.hero.hero-premium .hero-copy-taos{position:absolute;left:max(3.5vw,calc((100vw - 1240px)/2));top:14%;width:min(470px,43%);padding:0;border:0;border-radius:0;background:transparent;box-shadow:none;backdrop-filter:none;color:#fff;text-shadow:0 3px 12px rgba(0,0,0,.72)}
+.hero.hero-premium .hero-copy-taos .eyebrow{display:block!important;font-size:clamp(17px,2vw,24px);font-style:italic;font-weight:950;letter-spacing:.5px;color:#fff}
+.hero.hero-premium .hero-copy-taos h2{font-size:clamp(48px,6.2vw,82px);font-style:italic;line-height:.95;margin:4px 0 12px;font-weight:950;letter-spacing:-2px}
+.hero.hero-premium .hero-copy-taos .hero-taos-mega{display:inline-block;padding:7px 17px;margin:0 0 14px;border-radius:5px;background:#f5c928;color:#071629;font-size:clamp(25px,3vw,39px);font-style:italic;font-weight:950;line-height:1.05;text-shadow:none}
+.hero.hero-premium .hero-copy-taos .hero-taos-price{display:inline-block;padding:8px 16px;margin:0 0 12px;border-radius:6px;background:#08a9ee;color:#fff;font-size:clamp(23px,2.7vw,35px);font-style:italic;font-weight:950;line-height:1.1;text-shadow:none}
+.hero.hero-premium .hero-copy-taos ul{max-width:430px}
+.hero.hero-premium .hero-copy-taos li{font-size:clamp(16px,1.65vw,21px);font-weight:850;line-height:1.25;margin:11px 0;padding-left:30px}
+.hero.hero-premium .hero-copy-taos li:before{content:'✓';font-size:1.35em;color:#8cff00;left:0;top:-2px}
+@media(max-width:800px){
+ .hero.hero-premium .hero-copy-personal{left:24px;top:22%;width:min(500px,70%)}
+ .hero.hero-premium .hero-copy-tiguan{left:24px;top:20%;width:52%}
+ .hero.hero-premium .hero-copy-taos{left:24px;top:14%;width:54%}
+ .hero.hero-premium .hero-copy-tcross{left:24px;top:22%;width:68%}
+}
+@media(max-width:560px){
+ .hero.hero-premium .hero-copy-personal{left:14px;right:14px;top:20%;width:auto;padding:14px}
+ .hero.hero-premium .hero-copy-personal .personal-lines{grid-template-columns:1fr 1fr;gap:7px}
+ .hero.hero-premium .hero-copy-personal .personal-lines span{font-size:12px;padding:8px}
+ .hero.hero-premium .hero-copy-tiguan{left:16px;top:17%;width:68%}
+ .hero.hero-premium .hero-copy-taos{left:16px;top:13%;width:64%}
+ .hero.hero-premium .hero-copy-taos h2{font-size:44px}
+ .hero.hero-premium .hero-copy-taos .hero-taos-mega{font-size:23px}
+ .hero.hero-premium .hero-copy-taos .hero-taos-price{font-size:21px}
+ .hero.hero-premium .hero-copy-taos li{font-size:14px;margin:8px 0;padding-left:24px}
+ .hero.hero-premium .hero-copy-tcross{left:14px;right:14px;top:19%;width:auto;padding:16px}
+}
+
 </style>
 </head><body>
 
